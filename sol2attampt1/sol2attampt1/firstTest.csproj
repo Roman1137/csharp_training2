@@ -58,6 +58,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountData.cs" />
+    <Compile Include="GroupData.cs" />
+    <Compile Include="TheoryLecture\Circle.cs" />
+    <Compile Include="TheoryLecture\Figure.cs" />
+    <Compile Include="TheoryLecture\Square.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GroupCreationTests.cs" />
