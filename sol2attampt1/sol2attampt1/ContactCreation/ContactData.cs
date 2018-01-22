@@ -8,48 +8,29 @@ namespace WebAddressBookTests
 {
     class ContactData
     {
-        private string firstName;
-        private string middleName = "MiddleName";
-        private string lastName;
-        private string nickName = "NickName";
-        private string tittle = "Tittle";
-        private string company = "Company";
-        private string address = "Address";
-        private string home = "Home";
-        private string mobile = "Mobile";
-        private string work = "Work";
-        private string fax = "Fax";
-        private string email = "E-mail";
-        private string emailSecondField = "E-mail2";
-        private string emailThirdField = "E-mail3";
-        private string homepage = "Homepage";
-        private string addressSecondField = "Address SecondField";
-        private string homeSecondField = "Home SecondField";
-        private string notes = "Notes";
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; } = "MiddleName";
+        public string LastName { get; set; }
+        public string NickName { get; set; } = "NickName";
+        public string Tittle { get; set; } = "Tittle";
+        public string Company { get; set; } = "Company";
+        public string Address { get; set; } = "Address";
+        public string Home { get; set; } = "Home";
+        public string Mobile { get; set; } = "Mobile";
+        public string Work { get; set; } = "Work";
+        public string Fax { get; set; } = "Fax";
+        public string Email { get; set; } = "E-mail";
+        public string EmailSecondField { get; set; } = "E-mail2";
+        public string EmailThirdField { get; set; } = "E-mail3";
+        public string Homepage { get; set; } = "Homepage";
+        public string AddressSecondField { get; set; } = "Address SecondField";
+        public string HomeSecondField { get; set; } = "Home SecondField";
+        public string Notes { get; set; } = "Notes";
 
         public ContactData(string firstName, string lastName)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
         }
-
-        public string FirstName { get => firstName; set => firstName = value; }
-        public string MiddleName { get => middleName; set => middleName = value; }
-        public string LastName { get => lastName; set => lastName = value; }
-        public string NickName { get => nickName; set => nickName = value; }
-        public string Tittle { get => tittle; set => tittle = value; }
-        public string Company { get => company; set => company = value; }
-        public string Address { get => address; set => address = value; }
-        public string Home { get => home; set => home = value; }
-        public string Mobile { get => mobile; set => mobile = value; }
-        public string Work { get => work; set => work = value; }
-        public string Fax { get => fax; set => fax = value; }
-        public string Email { get => email; set => email = value; }
-        public string EmailSecondField { get => emailSecondField; set => emailSecondField = value; }
-        public string EmailThirdField { get => emailThirdField; set => emailThirdField = value; }
-        public string Homepage { get => homepage; set => homepage = value; }
-        public string AddressSecondField { get => addressSecondField; set => addressSecondField = value; }
-        public string HomeSecondField { get => homeSecondField; set => homeSecondField = value; }
-        public string Notes { get => notes; set => notes = value; }
     }
 }
