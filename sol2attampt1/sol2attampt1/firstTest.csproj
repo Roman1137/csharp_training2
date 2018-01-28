@@ -58,7 +58,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasePageHelperClass.cs" />
+    <Compile Include="Helper Classes\ContactHelper.cs" />
+    <Compile Include="Helper Classes\GroupHelper.cs" />
+    <Compile Include="Helper Classes\HelperBase.cs" />
+    <Compile Include="Helper Classes\LoginHelper.cs" />
+    <Compile Include="Helper Classes\NavigationHelper.cs" />
+    <Compile Include="Helper Classes\TestBase.cs" />
     <Compile Include="ContactCreation\ContactCreationTests.cs" />
     <Compile Include="AccountData.cs" />
     <Compile Include="ContactCreation\ContactData.cs" />

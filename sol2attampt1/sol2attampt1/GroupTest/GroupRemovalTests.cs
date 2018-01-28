@@ -10,18 +10,18 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupRemovalTests: BasePageHelperClass
+    public class GroupRemovalTests: TestBase
     {
         [Test]
         public void VerifyGroupRemoval()
         {
-            OpenHomePage();
-            Login(new AccountData("Admin", "secret"));
-            GoToGroupsPage();
-            SelectGroupToDelete(1);
-            InitGroupRemoval();
-            ReturnToGroupsPage();
-            Logout();
+            navigationHelper.OpenHomePage();
+            loginHelper.Login(new AccountData("Admin", "secret"));
+            navigationHelper.GoToGroupsPage();
+            groupHelper.SelectGroupToDelete(1);
+            groupHelper.InitGroupRemoval();
+            navigationHelper.GoToGroupsPage();
+            loginHelper.Logout();
         }
     }
 }
