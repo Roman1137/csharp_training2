@@ -10,20 +10,20 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class ContactCreationTests : BasePageHelperClass
+    public class GroupCreationTests:BasePageHelperClass
     {
-
+        
         [Test]
-        public void VerifyContactCreation()
+        public void VerifyGroupCreation()
         {
             OpenHomePage();
             Login(new AccountData("Admin", "secret"));
-            GoToContactsPage();
-            FillAllContactForms(new ContactData("Roman", "Borodavka"));
-            SubmitContactCreations();
-            ReturnToHomePage();
+            GoToGroupsPage();
+            InitGroupCreation();
+            FillGroupForm(new GroupData("someName", "someHeader", "someFooter"));
+            SubmitGroupCreation();
+            ReturnToGroupsPage();
             Logout();
         }
     }
 }
-
