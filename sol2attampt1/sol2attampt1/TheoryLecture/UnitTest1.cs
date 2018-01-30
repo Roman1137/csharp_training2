@@ -6,7 +6,7 @@ namespace sol2attampt1
     [TestClass]
     public class UnitTest1
     {
-        [TestMethod]
+        //[TestMethod]
         public void TestMethodSquare()
         {
             Square s1 = new Square(5);
@@ -24,7 +24,7 @@ namespace sol2attampt1
 
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TestMethodCircle()
         {
             Circle s1 = new Circle(5);

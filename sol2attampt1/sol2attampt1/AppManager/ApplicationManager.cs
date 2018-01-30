@@ -18,7 +18,7 @@ namespace WebAddressBookTests
         public LoginHelper Auth { get; set; }
         public NavigationHelper Navigator { get; set; }
         public GroupHelper Group { get; set; }
-        public ContactHelper contactHelper { get; set; }
+        public ContactHelper Contact { get; set; }
 
         public ApplicationManager ()
         {
@@ -27,14 +27,21 @@ namespace WebAddressBookTests
             options.BrowserExecutableLocation = @"X:FirefoxESR\firefox.exe";
             Driver = new FirefoxDriver(options);
             BaseURL = "http://localhost/";
-            Auth = new LoginHelper(Driver);
-            Navigator = new NavigationHelper(Driver, BaseURL);
-            Group = new GroupHelper(Driver);
-            contactHelper = new ContactHelper(Driver);
+            Auth = new LoginHelper(this);
+            Navigator = new NavigationHelper(this, BaseURL);
+            Group = new GroupHelper(this);
+            Contact = new ContactHelper(this);
         }
         public void Stop()
         {
-
+            try
+            {
+                Driver.Quit();
+            }
+            catch(Exception)
+            {
+                //Ignore errors if unable to close the browser
+            }
         }
     }
 }

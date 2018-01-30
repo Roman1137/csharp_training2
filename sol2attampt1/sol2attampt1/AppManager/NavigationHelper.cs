@@ -12,8 +12,8 @@ namespace WebAddressBookTests
     public class NavigationHelper : HelperBase
     {
         public string BaseURL { get; set; }
-        public NavigationHelper(IWebDriver Driver, string BaseURL)
-              : base(Driver)
+        public NavigationHelper(ApplicationManager manager, string BaseURL)
+              : base(manager)
         {
             this.BaseURL = BaseURL;
         }

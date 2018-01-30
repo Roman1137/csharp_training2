@@ -10,13 +10,12 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupRemovalTests: TestBase
+    public class ContactRemovalTests:TestBase
     {
         [Test]
-        public void VerifyGroupRemoval()
+        public void VerifyContactRemoval()
         {
-            const int numberOfItemToDelete = 1;
-            app.Group.Remove(numberOfItemToDelete);
+            app.Contact.Delete();
         }
     }
 }
