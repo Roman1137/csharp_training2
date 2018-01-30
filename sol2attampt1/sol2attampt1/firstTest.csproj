@@ -58,23 +58,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationManager.cs" />
     <Compile Include="Helper Classes\ContactHelper.cs" />
     <Compile Include="Helper Classes\GroupHelper.cs" />
     <Compile Include="Helper Classes\HelperBase.cs" />
     <Compile Include="Helper Classes\LoginHelper.cs" />
     <Compile Include="Helper Classes\NavigationHelper.cs" />
     <Compile Include="Helper Classes\TestBase.cs" />
-    <Compile Include="ContactCreation\ContactCreationTests.cs" />
+    <Compile Include="Tests\ContactCreationTests.cs" />
     <Compile Include="AccountData.cs" />
     <Compile Include="ContactCreation\ContactData.cs" />
     <Compile Include="GroupTest\GroupData.cs" />
-    <Compile Include="GroupTest\GroupRemovalTests.cs" />
+    <Compile Include="Tests\GroupRemovalTests.cs" />
     <Compile Include="TheoryLecture\Circle.cs" />
     <Compile Include="TheoryLecture\Figure.cs" />
     <Compile Include="TheoryLecture\Square.cs" />
     <Compile Include="TheoryLecture\UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GroupTest\GroupCreationTests.cs" />
+    <Compile Include="Tests\GroupCreationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
