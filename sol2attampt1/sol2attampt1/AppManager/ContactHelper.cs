@@ -45,9 +45,9 @@ namespace WebAddressBookTests
             Driver.FindElement(By.Name("notes")).SendKeys(contact.Notes);
             return this;
         }
-        public ContactHelper SelectCheckBox()
+        public ContactHelper SelectCheckBox(int number)
         {
-            Driver.FindElement(By.CssSelector("[name='selected[]'")).Click();
+            Driver.FindElement(By.CssSelector($"tbody tr:nth-child({number +1}) [type='checkbox']")).Click();
             return this;
         }
         public ContactHelper SubmitContactRemoval()
@@ -65,9 +65,9 @@ namespace WebAddressBookTests
             manager.Navigator.ReturnToHomePage();
             return this;
         }
-        public ContactHelper Delete()
+        public ContactHelper Delete(int number)
         {
-            SelectCheckBox().
+            SelectCheckBox(number).
             SubmitContactRemoval();
             manager.Navigator.ReturnToHomePage();
             return this;
