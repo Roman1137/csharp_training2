@@ -13,6 +13,39 @@ namespace WebAddressBookTests
     {
         public ContactHelper(ApplicationManager manager) :base(manager)
         { }
+        public ContactHelper Create(ContactData contact)
+        {
+            manager.Navigator.GoToContactsPage();
+            FillAllContactForms(contact).
+            SubmitContactCreations();
+            manager.Navigator.ReturnToHomePage();
+            return this;
+        }
+        public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate)
+        {
+            InitContactEditIcon(numberOfItemTModify);
+            FillAllContactForms(infoForUpdate);
+            SubmitContectEdition();
+            manager.Navigator.ReturnToHomePage();
+            return this;
+        }
+        public ContactHelper SubmitContectEdition()
+        {
+            Driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+        public ContactHelper InitContactEditIcon(int numberOfItemTModify)
+        {
+            Driver.FindElement(By.CssSelector($"tbody tr:nth-child({numberOfItemTModify + 1}) [title='Edit']")).Click();
+            return this;
+        }
+        public ContactHelper Delete(int number)
+        {
+            SelectCheckBox(number).
+            SubmitContactRemoval();
+            manager.Navigator.ReturnToHomePage();
+            return this;
+        }
         public ContactHelper SubmitContactCreations()
         {
             Driver.FindElement(By.Name("submit")).Click();
@@ -54,21 +87,6 @@ namespace WebAddressBookTests
         {
             Driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Driver.SwitchTo().Alert().Accept(); // it will click on OK button
-            return this;
-        }
-        public ContactHelper Create(ContactData contact)
-        {
-            manager.Navigator.GoToContactsPage();
-            FillAllContactForms(contact).
-            SubmitContactCreations();
-            manager.Navigator.ReturnToHomePage();
-            return this;
-        }
-        public ContactHelper Delete(int number)
-        {
-            SelectCheckBox(number).
-            SubmitContactRemoval();
-            manager.Navigator.ReturnToHomePage();
             return this;
         }
     }

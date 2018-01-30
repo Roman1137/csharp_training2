@@ -22,23 +22,45 @@ namespace WebAddressBookTests
             manager.Navigator.GoToGroupsPage();
             return this;
         }
+        public GroupHelper Modify(int numberOfItemToEdited, GroupData newInfo)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(numberOfItemToEdited);
+            InitGroupModification();
+            FillGroupForm(newInfo);
+            SubmitGroupModification();
+            manager.Navigator.GoToGroupsPage();
+            return this;
+        }
+        public GroupHelper SubmitGroupModification()
+        {
+            Driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+        public GroupHelper InitGroupModification()
+        {
+            Driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+
         public GroupHelper Remove(int number)
         {
             manager.Navigator.GoToGroupsPage();
-            SelectGroupToDelete(number).
+            SelectGroup(number).
             InitGroupRemoval();
             manager.Navigator.GoToGroupsPage();
             return this;
         }
-        public void SubmitGroupCreation() => Driver.FindElement(By.Name("submit")).Click();
+        public GroupHelper SubmitGroupCreation()
+        {
+            Driver.FindElement(By.Name("submit")).Click();
+            return this;
+        }
 
         public GroupHelper FillGroupForm(GroupData group)
         {
-            Driver.FindElement(By.Name("group_name")).Clear();
             Driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            Driver.FindElement(By.Name("group_header")).Clear();
             Driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            Driver.FindElement(By.Name("group_footer")).Clear();
             Driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
             return this;
         }
@@ -55,7 +77,7 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public GroupHelper SelectGroupToDelete(int index)
+        public GroupHelper SelectGroup(int index)
         {
             Driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
