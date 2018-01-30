@@ -53,8 +53,7 @@ namespace WebAddressBookTests
         public ContactHelper SubmitContactRemoval()
         {
             Driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            IAlert alert = Driver.SwitchTo().Alert();
-            alert.Accept(); // it will click on OK button
+            Driver.SwitchTo().Alert().Accept(); // it will click on OK button
             return this;
         }
         public ContactHelper Create(ContactData contact)
