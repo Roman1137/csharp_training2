@@ -19,7 +19,7 @@ namespace WebAddressBookTests
         }
         public void OpenHomePage() => Driver.Navigate().GoToUrl(BaseURL + "addressbook/");
         public void GoToGroupsPage() => Driver.FindElement(By.LinkText("groups")).Click();
-        public void ReturnToHomePage() => Driver.FindElement(By.LinkText("home")).Click();
+        public void GoToHomePage() => Driver.FindElement(By.LinkText("home")).Click();
         public void GoToContactsPage() => Driver.FindElement(By.LinkText("add new")).Click();
     }
 }

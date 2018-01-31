@@ -18,15 +18,24 @@ namespace WebAddressBookTests
             manager.Navigator.GoToContactsPage();
             FillAllContactForms(contact).
             SubmitContactCreations();
-            manager.Navigator.ReturnToHomePage();
+            manager.Navigator.GoToHomePage();
             return this;
         }
         public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate)
         {
+            manager.Navigator.GoToHomePage();
             InitContactEditIcon(numberOfItemTModify);
             FillAllContactForms(infoForUpdate);
             SubmitContectEdition();
-            manager.Navigator.ReturnToHomePage();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+        public ContactHelper Delete(int number)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectCheckBox(number).
+            SubmitContactRemoval();
+            manager.Navigator.GoToHomePage();
             return this;
         }
         public ContactHelper SubmitContectEdition()
@@ -39,13 +48,7 @@ namespace WebAddressBookTests
             Driver.FindElement(By.CssSelector($"tbody tr:nth-child({numberOfItemTModify + 1}) [title='Edit']")).Click();
             return this;
         }
-        public ContactHelper Delete(int number)
-        {
-            SelectCheckBox(number).
-            SubmitContactRemoval();
-            manager.Navigator.ReturnToHomePage();
-            return this;
-        }
+        
         public ContactHelper SubmitContactCreations()
         {
             Driver.FindElement(By.Name("submit")).Click();
