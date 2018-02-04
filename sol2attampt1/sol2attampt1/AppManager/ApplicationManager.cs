@@ -8,6 +8,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
 
 namespace WebAddressBookTests
 {
@@ -24,12 +25,9 @@ namespace WebAddressBookTests
 
         private ApplicationManager ()
         {
-            FirefoxOptions options = new FirefoxOptions();
-            options.UseLegacyImplementation = true;
-            options.BrowserExecutableLocation = @"X:FirefoxESR\firefox.exe";
-            Driver = new FirefoxDriver(options);
+            Driver = new ChromeDriver(); 
             BaseURL = "http://localhost/";
-            Driver.Manage().Timeouts().ImplicitWait = new TimeSpan(10);
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             //initialize helper classes
             Auth = new LoginHelper(this);
             Navigator = new NavigationHelper(this, BaseURL);
@@ -39,18 +37,24 @@ namespace WebAddressBookTests
         public static ApplicationManager GetInstance()
         {
             if (!app.IsValueCreated)
-                app.Value = new ApplicationManager();
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigator.OpenHomePage();
+                app.Value = newInstance;
+                
+            }   
             return app.Value;
         }
-        public void Stop()
+        ~ApplicationManager()
         {
+            Auth.Logout();
             try
             {
                 Driver.Close();
                 Driver.Quit();
                 Driver.Dispose();
             }
-            catch(Exception)
+            catch (Exception)
             {
             }
         }

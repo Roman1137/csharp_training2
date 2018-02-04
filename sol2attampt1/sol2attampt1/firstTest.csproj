@@ -64,16 +64,17 @@
     <Compile Include="AppManager\HelperBase.cs" />
     <Compile Include="AppManager\LoginHelper.cs" />
     <Compile Include="AppManager\NavigationHelper.cs" />
+    <Compile Include="Tests\AuthTestBase.cs" />
     <Compile Include="Tests\ContactRemovalTests.cs" />
     <Compile Include="Tests\ContactUpdateTests.cs" />
     <Compile Include="Tests\GroupUpdateTests.cs" />
+    <Compile Include="Tests\LoginTests.cs" />
     <Compile Include="Tests\TestBase.cs" />
     <Compile Include="Tests\ContactCreationTests.cs" />
     <Compile Include="Model\AccountData.cs" />
     <Compile Include="Model\ContactData.cs" />
     <Compile Include="Model\GroupData.cs" />
     <Compile Include="Tests\GroupRemovalTests.cs" />
-    <Compile Include="Tests\TestSuiteFixture.cs" />
     <Compile Include="TheoryLecture\Circle.cs" />
     <Compile Include="TheoryLecture\Figure.cs" />
     <Compile Include="TheoryLecture\Square.cs" />
@@ -93,6 +94,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.props'))" />
     <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.targets'))" />
+    <Error Condition="!Exists('..\packages\Selenium.Chrome.WebDriver.2.35\build\Selenium.Chrome.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Chrome.WebDriver.2.35\build\Selenium.Chrome.WebDriver.targets'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.1.18\build\net45\MSTest.TestAdapter.targets')" />
+  <Import Project="..\packages\Selenium.Chrome.WebDriver.2.35\build\Selenium.Chrome.WebDriver.targets" Condition="Exists('..\packages\Selenium.Chrome.WebDriver.2.35\build\Selenium.Chrome.WebDriver.targets')" />
 </Project>

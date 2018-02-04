@@ -11,15 +11,51 @@ namespace WebAddressBookTests
 {
     public class NavigationHelper : HelperBase
     {
+        const string endPointForGroupsPage = "addressbook/group.php";
+        const string endPointForHomePage = "addressbook/";
+        const string endPointForContactsPage = "addressbook/edit.php";
+
         public string BaseURL { get; set; }
         public NavigationHelper(ApplicationManager manager, string BaseURL)
               : base(manager)
         {
             this.BaseURL = BaseURL;
         }
-        public void OpenHomePage() => Driver.Navigate().GoToUrl(BaseURL + "addressbook/");
-        public void GoToGroupsPage() => Driver.FindElement(By.LinkText("groups")).Click();
-        public void GoToHomePage() => Driver.FindElement(By.LinkText("home")).Click();
-        public void GoToContactsPage() => Driver.FindElement(By.LinkText("add new")).Click();
+        public void OpenHomePage()
+        {
+            Driver.Navigate().GoToUrl(BaseURL + endPointForHomePage);
+        }
+
+        public void GoToGroupsPage()
+        {
+            if (!IsThisPageOpened(BaseURL +endPointForGroupsPage, By.Name("new")))
+            Driver.FindElement(By.LinkText("groups")).Click();
+        }
+
+        public void GoToHomePage()
+        {
+            if(!IsThisPageOpened(BaseURL+ endPointForHomePage,By.Id("search_count")))
+            Driver.FindElement(By.LinkText("home")).Click();
+        }
+
+        public void GoToContactsPage()
+        {
+            if(!IsThisPageOpened(BaseURL+endPointForContactsPage, By.Name("submit")))
+            Driver.FindElement(By.LinkText("add new")).Click();
+        }
+        private bool IsThisPageOpened(string Url, By locator)
+        {
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
+            if ((Driver.Url == Url) && (IsElementPresent(locator)))
+            {
+                Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                return true;
+            }
+            else
+            {
+                Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                return false;
+            }
+        }
     }
 }

@@ -10,9 +10,8 @@ namespace WebAddressBookTests
     public class TestBase
     {
         public ApplicationManager app { get; set; }
-
         [SetUp]
-        public void SetupTest()
+        public void SetupApplicationManager()
         {
             app = ApplicationManager.GetInstance();
         }

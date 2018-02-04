@@ -7,7 +7,7 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupUpdateTests : TestBase
+    public class GroupUpdateTests : AuthTestBase
     {
         [Test]
         public void VerifyGroupModification()
