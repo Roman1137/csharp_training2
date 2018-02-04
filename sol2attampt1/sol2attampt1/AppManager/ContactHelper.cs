@@ -58,27 +58,28 @@ namespace WebAddressBookTests
         public ContactHelper FillAllContactForms(ContactData contact)
         {
             //Filling fields in the first block
-            Driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
-            Driver.FindElement(By.Name("middlename")).SendKeys(contact.MiddleName);
-            Driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
-            Driver.FindElement(By.Name("nickname")).SendKeys(contact.NickName);
-            Driver.FindElement(By.Name("title")).SendKeys(contact.Tittle);
-            Driver.FindElement(By.Name("company")).SendKeys(contact.Company);
-            Driver.FindElement(By.Name("address")).SendKeys(contact.Address);
+
+            Type(By.Name("firstname"),contact.FirstName);
+            Type(By.Name("middlename"),contact.MiddleName);
+            Type(By.Name("lastname"),contact.LastName);
+            Type(By.Name("nickname"),contact.NickName);
+            Type(By.Name("title"),contact.Tittle);
+            Type(By.Name("company"),contact.Company);
+            Type(By.Name("address"),contact.Address);
             //Filling fields in the second block
-            Driver.FindElement(By.Name("home")).SendKeys(contact.Home);
-            Driver.FindElement(By.Name("mobile")).SendKeys(contact.Mobile);
-            Driver.FindElement(By.Name("work")).SendKeys(contact.Work);
-            Driver.FindElement(By.Name("fax")).SendKeys(contact.Fax);
+            Type(By.Name("home"),contact.Home);
+            Type(By.Name("mobile"),contact.Mobile);
+            Type(By.Name("work"),contact.Work);
+            Type(By.Name("fax"),contact.Fax);
             //Filling fields in the third block
-            Driver.FindElement(By.Name("email")).SendKeys(contact.Email);
-            Driver.FindElement(By.Name("email2")).SendKeys(contact.EmailSecondField);
-            Driver.FindElement(By.Name("email3")).SendKeys(contact.EmailThirdField);
-            Driver.FindElement(By.Name("homepage")).SendKeys(contact.Homepage);
+            Type(By.Name("email"),contact.Email);
+            Type(By.Name("email2"),contact.EmailSecondField);
+            Type(By.Name("email3"),contact.EmailThirdField);
+            Type(By.Name("homepage"),contact.Homepage);
             //Filling fields in the "Secondary" block
-            Driver.FindElement(By.Name("address2")).SendKeys(contact.AddressSecondField);
-            Driver.FindElement(By.Name("phone2")).SendKeys(contact.Home);
-            Driver.FindElement(By.Name("notes")).SendKeys(contact.Notes);
+            Type(By.Name("address2"),contact.AddressSecondField);
+            Type(By.Name("phone2"),contact.Home);
+            Type(By.Name("notes"),contact.Notes);
             return this;
         }
         public ContactHelper SelectCheckBox(int number)

@@ -13,7 +13,9 @@ namespace WebAddressBookTests
         public void VerifyGroupModification()
         {
             const int numberOfItemToEdited = 1;
-            GroupData newInfo = new GroupData("new Name","new Header","new Footer");
+            GroupData newInfo = new GroupData("new Name");
+            newInfo.Header = null;
+            newInfo.Footer = null;
             app.Group.Modify(numberOfItemToEdited,newInfo);
         }
     }
