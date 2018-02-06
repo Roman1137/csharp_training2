@@ -12,20 +12,18 @@ namespace WebAddressBookTests
     [TestFixture]
     public class GroupCreationTests: AuthTestBase
     {
-        
         [Test]
         public void VerifyGroupCreation()
         {
-            GroupData group = new GroupData("someName", "someHeader", "someFooter");
-
-            app.Group.Create(group);
+            GroupData groupInfoForUpdate = new GroupData("new Name", "new Header", "new Footer");
+            app.Group.Create(groupInfoForUpdate);
         }
         [Test]
         public void VerifyEmptyGroupCreation()
         {
-            GroupData group = new GroupData("");
+            GroupData emptyGroupInfo = new GroupData("");
 
-            app.Group.Create(group);
+            app.Group.Create(emptyGroupInfo);
         }
     }
 }

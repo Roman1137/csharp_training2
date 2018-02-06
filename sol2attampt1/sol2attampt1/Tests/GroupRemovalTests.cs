@@ -12,11 +12,13 @@ namespace WebAddressBookTests
     [TestFixture]
     public class GroupRemovalTests: AuthTestBase
     {
+        GroupData groupInfoForCreation = new GroupData("someName", "someHeader", "someFooter");
+
         [Test]
         public void VerifyGroupRemoval()
         {
             const int numberOfItemToDelete = 1;
-            app.Group.Remove(numberOfItemToDelete);
+            app.Group.Remove(numberOfItemToDelete,groupInfoForCreation);
         }
     }
 }

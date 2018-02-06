@@ -12,11 +12,13 @@ namespace WebAddressBookTests
     [TestFixture]
     public class ContactRemovalTests: AuthTestBase
     {
+        ContactData contactInfoForCreation = new ContactData("Roman", "Borodavka");
+
         [Test]
         public void VerifyContactRemoval()
         {
             const int numberOfItemToDelete = 1;
-            app.Contact.Delete(numberOfItemToDelete);
+            app.Contact.Delete(numberOfItemToDelete,contactInfoForCreation);
         }
     }
 }
