@@ -91,7 +91,7 @@ namespace WebAddressBookTests
         {
             Driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Driver.SwitchTo().Alert().Accept(); // it will click on OK button
-            return this;
+            return this;  
         }
     }
 }
