@@ -17,7 +17,7 @@ namespace WebAddressBookTests
         [Test]
         public void VerifyContactRemoval()
         {
-            const int numberOfItemToDelete = 1;
+            const int numberOfItemToDelete = 3;
             app.Contact.Delete(numberOfItemToDelete,contactInfoForCreation);
         }
     }

@@ -12,13 +12,14 @@ namespace WebAddressBookTests
     [TestFixture]
     public class ContactUpdateTests : AuthTestBase
     {
-        
+        ContactData contactInfoForCreation = new ContactData("Roman", "Borodavka");
+
         [Test]
         public void VerifyContactModication()
         {
             ContactData contactInfoForUpdate = new ContactData("Vasya", "Pupkin");
-            const int numberOfItemTModify = 1;
-            app.Contact.Modify(numberOfItemTModify, contactInfoForUpdate);
+            const int numberOfItemTModify = 5;
+            app.Contact.Modify(numberOfItemTModify, contactInfoForCreation,contactInfoForUpdate);
         }
     }
 }

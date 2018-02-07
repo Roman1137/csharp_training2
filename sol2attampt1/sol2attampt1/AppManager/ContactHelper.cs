@@ -21,10 +21,10 @@ namespace WebAddressBookTests
             manager.Navigator.GoToHomePage();
             return this;
         }
-        public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate)
+        public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate, ContactData contactInfoForCreation)
         {
             manager.Navigator.GoToHomePage();
-            InitContactEditIcon(numberOfItemTModify, infoForUpdate);
+            InitContactEditIcon(numberOfItemTModify, contactInfoForCreation);
             FillAllContactForms(infoForUpdate);
             SubmitContectEdition();
             manager.Navigator.GoToHomePage();
@@ -45,7 +45,7 @@ namespace WebAddressBookTests
         }
         public ContactHelper InitContactEditIcon(int numberOfItemTModify, ContactData contactInfoForCreation)
         {
-            if (!IsElementPresent(By.CssSelector($"tbody tr:nth-child({numberOfItemTModify + 1}) [title='Edit']")))
+            while (!IsElementPresent(By.CssSelector($"tbody tr:nth-child({numberOfItemTModify + 1}) [title='Edit']")))
             {
                 Create(contactInfoForCreation);
             }
@@ -88,7 +88,7 @@ namespace WebAddressBookTests
         }
         public ContactHelper SelectCheckBox(int number, ContactData contactInfoForCreation)
         {
-            if (!IsElementPresent(By.CssSelector($"tbody tr:nth-child({number + 1}) [type='checkbox']")))
+            while (!IsElementPresent(By.CssSelector($"tbody tr:nth-child({number + 1}) [type='checkbox']")))
             {
                 Create(contactInfoForCreation);
             }
