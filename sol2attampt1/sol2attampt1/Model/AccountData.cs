@@ -14,7 +14,7 @@ namespace WebAddressBookTests
         public AccountData(string userName, string password)
         {
             this.UserName = userName;
-            this.Password = password;
+            this.Password = password;  
         }
     }
 }
