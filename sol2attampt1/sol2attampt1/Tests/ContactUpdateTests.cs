@@ -19,7 +19,8 @@ namespace WebAddressBookTests
         {
             ContactData contactInfoForUpdate = new ContactData("Vasya", "Pupkin");
             const int numberOfItemTModify = 5;
-            app.Contact.Modify(numberOfItemTModify, contactInfoForCreation,contactInfoForUpdate);
+            app.Contact.VerifyContactExists(numberOfItemTModify, contactInfoForCreation);
+            app.Contact.Modify(numberOfItemTModify,contactInfoForUpdate);
         }
     }
 }

@@ -18,7 +18,8 @@ namespace WebAddressBookTests
             const int numberOfItemToEdited = 5;
             
             groupInfoForUpdate.Footer = null;
-            app.Group.Modify(numberOfItemToEdited,groupInfoForUpdate, groupInfoForCreation);
+            app.Group.VerifyGroupExists(numberOfItemToEdited, groupInfoForCreation);
+            app.Group.Modify(numberOfItemToEdited,groupInfoForUpdate);
         }
     }
 }

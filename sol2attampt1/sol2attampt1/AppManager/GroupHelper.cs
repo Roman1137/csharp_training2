@@ -23,10 +23,9 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public GroupHelper Modify(int numberOfItemToEdit, GroupData infoForUpdate, GroupData infoForCreation)
+        public GroupHelper Modify(int numberOfItemToEdit, GroupData infoForUpdate)
         {
-            manager.Navigator.GoToGroupsPage();
-            SelectGroup(numberOfItemToEdit, infoForCreation);
+            SelectGroup(numberOfItemToEdit);
             InitGroupModification();
             FillGroupForm(infoForUpdate);
             SubmitGroupModification();
@@ -34,10 +33,9 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public GroupHelper Remove(int numberOfItemToDelete, GroupData infoForCreation)
+        public GroupHelper Remove(int numberOfItemToDelete)
         {
-            manager.Navigator.GoToGroupsPage();
-            SelectGroup(numberOfItemToDelete, infoForCreation).
+            SelectGroup(numberOfItemToDelete).
             InitGroupRemoval();
             manager.Navigator.GoToGroupsPage();
             return this;
@@ -68,12 +66,8 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public GroupHelper SelectGroup(int index, GroupData infoForCreation)
+        public GroupHelper SelectGroup(int index)
         {
-            while(!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
-            {
-                Create(infoForCreation);
-            }
             Driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
@@ -87,6 +81,15 @@ namespace WebAddressBookTests
         {
             Driver.FindElement(By.Name("edit")).Click();
             return this;
+        }
+        public bool VerifyGroupExists(int index,GroupData infoForCreation)
+        {
+            manager.Navigator.GoToGroupsPage();
+            while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            {
+                Create(infoForCreation);
+            }
+            return true;
         }
 
     }

@@ -18,7 +18,8 @@ namespace WebAddressBookTests
         public void VerifyGroupRemoval()
         {
             const int numberOfItemToDelete = 5;
-            app.Group.Remove(numberOfItemToDelete,groupInfoForCreation);
+            app.Group.VerifyGroupExists(numberOfItemToDelete, groupInfoForCreation);
+            app.Group.Remove(numberOfItemToDelete);
         }
     }
 }

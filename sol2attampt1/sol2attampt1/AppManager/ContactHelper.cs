@@ -21,19 +21,17 @@ namespace WebAddressBookTests
             manager.Navigator.GoToHomePage();
             return this;
         }
-        public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate, ContactData contactInfoForCreation)
+        public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate)
         {
-            manager.Navigator.GoToHomePage();
-            InitContactEditIcon(numberOfItemTModify, contactInfoForCreation);
+            InitContactEditIcon(numberOfItemTModify);
             FillAllContactForms(infoForUpdate);
             SubmitContectEdition();
             manager.Navigator.GoToHomePage();
             return this;
         }
-        public ContactHelper Delete(int number, ContactData contactInfoForCreation)
+        public ContactHelper Delete(int numberOfElementToDelete)
         {
-            manager.Navigator.GoToHomePage();
-            SelectCheckBox(number, contactInfoForCreation).
+            SelectCheckBox(numberOfElementToDelete).
             SubmitContactRemoval();
             manager.Navigator.GoToHomePage();
             return this;
@@ -43,13 +41,9 @@ namespace WebAddressBookTests
             Driver.FindElement(By.Name("update")).Click();
             return this;
         }
-        public ContactHelper InitContactEditIcon(int numberOfItemTModify, ContactData contactInfoForCreation)
+        public ContactHelper InitContactEditIcon(int indexOfContact)
         {
-            while (!IsElementPresent(By.CssSelector($"tbody tr:nth-child({numberOfItemTModify + 1}) [title='Edit']")))
-            {
-                Create(contactInfoForCreation);
-            }
-            Driver.FindElement(By.CssSelector($"tbody tr:nth-child({numberOfItemTModify + 1}) [title='Edit']")).Click();
+            Driver.FindElement(By.CssSelector($"tbody tr:nth-child({indexOfContact + 1}) [title='Edit']")).Click();
             return this;
         }
 
@@ -86,12 +80,8 @@ namespace WebAddressBookTests
             Type(By.Name("notes"), contact.Notes);
             return this;
         }
-        public ContactHelper SelectCheckBox(int number, ContactData contactInfoForCreation)
+        public ContactHelper SelectCheckBox(int number)
         {
-            while (!IsElementPresent(By.CssSelector($"tbody tr:nth-child({number + 1}) [type='checkbox']")))
-            {
-                Create(contactInfoForCreation);
-            }
             Driver.FindElement(By.CssSelector($"tbody tr:nth-child({number + 1}) [type='checkbox']")).Click();
             return this;
         }
@@ -100,6 +90,15 @@ namespace WebAddressBookTests
             Driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Driver.SwitchTo().Alert().Accept(); // it will click on OK button
             return this;
+        }
+        public bool VerifyContactExists(int indexOfContact, ContactData contactInfoForCreation)
+        {
+            manager.Navigator.GoToContactsPage();
+            while (!IsElementPresent(By.CssSelector($"tbody tr:nth-child({indexOfContact + 1}) [title='Edit']")))
+            {
+                Create(contactInfoForCreation);
+            }
+            return true;
         }
     }
 }
