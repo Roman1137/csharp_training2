@@ -53,6 +53,7 @@ namespace WebAddressBookTests
                 Driver.Close();
                 Driver.Quit();
                 Driver.Dispose();
+                Driver = null;
             }
             catch (Exception)
             {

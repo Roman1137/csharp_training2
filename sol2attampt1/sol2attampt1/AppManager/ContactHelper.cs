@@ -23,6 +23,7 @@ namespace WebAddressBookTests
         }
         public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate)
         {
+            manager.Navigator.GoToHomePage();
             InitContactEditIcon(numberOfItemTModify);
             FillAllContactForms(infoForUpdate);
             SubmitContectEdition();
@@ -31,6 +32,7 @@ namespace WebAddressBookTests
         }
         public ContactHelper Delete(int numberOfElementToDelete)
         {
+            manager.Navigator.GoToHomePage();
             SelectCheckBox(numberOfElementToDelete).
             SubmitContactRemoval();
             manager.Navigator.GoToHomePage();

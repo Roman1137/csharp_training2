@@ -25,6 +25,7 @@ namespace WebAddressBookTests
 
         public GroupHelper Modify(int numberOfItemToEdit, GroupData infoForUpdate)
         {
+            manager.Navigator.GoToGroupsPage();
             SelectGroup(numberOfItemToEdit);
             InitGroupModification();
             FillGroupForm(infoForUpdate);
@@ -35,6 +36,7 @@ namespace WebAddressBookTests
 
         public GroupHelper Remove(int numberOfItemToDelete)
         {
+            manager.Navigator.GoToGroupsPage();
             SelectGroup(numberOfItemToDelete).
             InitGroupRemoval();
             manager.Navigator.GoToGroupsPage();
