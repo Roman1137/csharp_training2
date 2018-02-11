@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebAddressBookTests
 {
@@ -19,9 +20,9 @@ namespace WebAddressBookTests
             this.manager = manager;
             this.Driver = manager.Driver;
         }
-        public void Type(By locator,string text)
+        public void Type(By locator, string text)
         {
-            if(text!=null)
+            if (text != null)
             {
                 Driver.FindElement(locator).Clear();
                 Driver.FindElement(locator).SendKeys(text);
@@ -30,12 +31,11 @@ namespace WebAddressBookTests
         public bool IsElementPresent(By locator)
         {
             Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
-            IReadOnlyCollection<IWebElement> collection = Driver.FindElements(locator);
+            ICollection<IWebElement> collection = Driver.FindElements(locator);
             Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             if (collection.Count == 0)
                 return false;
-            else
-                return true;
+            return collection.First().Displayed;
         }
     }
 }

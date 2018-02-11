@@ -95,7 +95,7 @@ namespace WebAddressBookTests
         }
         public bool VerifyContactExists(int indexOfContact, ContactData contactInfoForCreation)
         {
-            manager.Navigator.GoToContactsPage();
+            manager.Navigator.GoToHomePage();
             while (!IsElementPresent(By.CssSelector($"tbody tr:nth-child({indexOfContact + 1}) [title='Edit']")))
             {
                 Create(contactInfoForCreation);
