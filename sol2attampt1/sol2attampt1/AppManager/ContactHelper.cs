@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -21,6 +23,22 @@ namespace WebAddressBookTests
             manager.Navigator.GoToHomePage();
             return this;
         }
+
+        public List<ContactData> GetContactsList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+
+            ICollection<IWebElement> elements = SearchCollection(By.CssSelector("[name=entry]"));
+            foreach (IWebElement element in elements)
+            {
+                string lastName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(2)")).Text;
+                string firstName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(3)")).Text;
+                contacts.Add(new ContactData(firstName, lastName));
+            }
+            return contacts;
+        }
+
         public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate)
         {
             manager.Navigator.GoToHomePage();
@@ -84,7 +102,7 @@ namespace WebAddressBookTests
         }
         public ContactHelper SelectCheckBox(int number)
         {
-            Driver.FindElement(By.CssSelector($"tbody tr:nth-child({number + 1}) [type='checkbox']")).Click();
+            Driver.FindElement(By.XPath($"(//input[@name='selected[]'])[{number}]")).Click();
             return this;
         }
         public ContactHelper SubmitContactRemoval()
@@ -96,11 +114,19 @@ namespace WebAddressBookTests
         public bool VerifyContactExists(int indexOfContact, ContactData contactInfoForCreation)
         {
             manager.Navigator.GoToHomePage();
-            while (!IsElementPresent(By.CssSelector($"tbody tr:nth-child({indexOfContact + 1}) [title='Edit']")))
+            while (!IsElementPresent(By.XPath($"(//tr[@name='entry'])[{indexOfContact}]")))
             {
                 Create(contactInfoForCreation);
             }
             return true;
+        }
+
+        public ICollection<IWebElement> SearchCollection(By locator)
+        {
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
+            ICollection<IWebElement> collection = Driver.FindElements(locator);
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            return collection;
         }
     }
 }

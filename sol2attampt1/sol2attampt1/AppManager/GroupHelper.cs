@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -21,6 +22,18 @@ namespace WebAddressBookTests
                 SubmitGroupCreation();
             manager.Navigator.GoToGroupsPage();
             return this;
+        }
+
+        public List<GroupData> GetGroupsList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupsPage();
+            ICollection<IWebElement> elements = Driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+            return groups;
         }
 
         public GroupHelper Modify(int numberOfItemToEdit, GroupData infoForUpdate)
@@ -70,7 +83,7 @@ namespace WebAddressBookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            Driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            Driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index) + "]")).Click();
             return this;
         }
 
@@ -87,7 +100,7 @@ namespace WebAddressBookTests
         public bool VerifyGroupExists(int index,GroupData infoForCreation)
         {
             manager.Navigator.GoToGroupsPage();
-            while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            while (!IsElementPresent(By.XPath($"(//input[@name='selected[]'])[{index}]")))
             {
                 Create(infoForCreation);
             }

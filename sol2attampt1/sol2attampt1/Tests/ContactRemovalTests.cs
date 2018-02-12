@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -19,7 +20,13 @@ namespace WebAddressBookTests
         {
             const int numberOfItemToDelete = 3;
             app.Contact.VerifyContactExists(numberOfItemToDelete, contactInfoForCreation);
+            List<ContactData> contactsBefore = app.Contact.GetContactsList();
             app.Contact.Delete(numberOfItemToDelete);
+            List<ContactData> contactsAfter = app.Contact.GetContactsList();
+            contactsBefore.RemoveAt(numberOfItemToDelete-1);
+            contactsBefore.Sort();
+            contactsAfter.Sort();
+            Assert.AreEqual(contactsBefore,contactsAfter);
         }
     }
 }

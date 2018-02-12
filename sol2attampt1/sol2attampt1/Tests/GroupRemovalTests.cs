@@ -6,6 +6,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.Generic;
 
 namespace WebAddressBookTests
 {
@@ -19,7 +20,11 @@ namespace WebAddressBookTests
         {
             const int numberOfItemToDelete = 5;
             app.Group.VerifyGroupExists(numberOfItemToDelete, groupInfoForCreation);
+            List<GroupData> groupsBefore = app.Group.GetGroupsList();
             app.Group.Remove(numberOfItemToDelete);
+            List<GroupData> groupsaAfter = app.Group.GetGroupsList();
+            groupsBefore.RemoveAt(numberOfItemToDelete-1);
+            Assert.AreEqual(groupsBefore,groupsaAfter);
         }
     }
 }
