@@ -20,14 +20,14 @@ namespace WebAddressBookTests
             groupInfoForUpdate.Footer = null;
             app.Group.VerifyGroupExists(numberOfItemToEdited, groupInfoForCreation);
             List<GroupData> groupsBefore = app.Group.GetGroupsList();
-            GroupData groupToBeModified = groupsBefore[numberOfItemToEdited - 1];
+            GroupData groupToBeModified = groupsBefore[numberOfItemToEdited];
 
             app.Group.Modify(numberOfItemToEdited,groupInfoForUpdate);
 
             Assert.AreEqual(groupsBefore.Count, app.Group.GetGroupCount());
 
             List<GroupData> groupsAfter = app.Group.GetGroupsList();
-            groupsBefore[numberOfItemToEdited-1].Name = groupInfoForUpdate.Name;
+            groupsBefore[numberOfItemToEdited].Name = groupInfoForUpdate.Name;
             groupsBefore.Sort();
             groupsAfter.Sort();
             Assert.AreEqual(groupsBefore, groupsAfter);

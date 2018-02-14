@@ -20,14 +20,14 @@ namespace WebAddressBookTests
             const int numberOfItemToDelete = 3;
             app.Contact.VerifyContactExists(numberOfItemToDelete, contactInfoForCreation);
             List<ContactData> contactsBefore = app.Contact.GetContactsList();
-            ContactData contactToBeRemoved = contactsBefore[numberOfItemToDelete - 1];
+            ContactData contactToBeRemoved = contactsBefore[numberOfItemToDelete];
 
             app.Contact.Delete(numberOfItemToDelete);
 
             Assert.AreEqual(contactsBefore.Count - 1, app.Contact.GetContactCount());
 
             List<ContactData> contactsAfter = app.Contact.GetContactsList();
-            contactsBefore.RemoveAt(numberOfItemToDelete-1);
+            contactsBefore.RemoveAt(numberOfItemToDelete);
             contactsAfter.Sort();
             contactsBefore.Sort();
             Assert.AreEqual(contactsBefore,contactsAfter);

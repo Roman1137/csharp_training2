@@ -21,14 +21,14 @@ namespace WebAddressBookTests
             const int numberOfItemToDelete = 5;
             app.Group.VerifyGroupExists(numberOfItemToDelete, groupInfoForCreation);
             List<GroupData> groupsBefore = app.Group.GetGroupsList();
-            GroupData groupToBeRemoved = groupsBefore[numberOfItemToDelete - 1];
+            GroupData groupToBeRemoved = groupsBefore[numberOfItemToDelete];
 
             app.Group.Remove(numberOfItemToDelete);
 
             Assert.AreEqual(groupsBefore.Count - 1, app.Group.GetGroupCount());
 
             List<GroupData> groupsAfter = app.Group.GetGroupsList();
-            groupsBefore.RemoveAt(numberOfItemToDelete - 1);
+            groupsBefore.RemoveAt(numberOfItemToDelete);
             groupsAfter.Sort();
             groupsBefore.Sort();
             Assert.AreEqual(groupsBefore, groupsAfter);

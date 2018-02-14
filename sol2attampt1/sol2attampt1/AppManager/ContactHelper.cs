@@ -90,22 +90,22 @@ namespace WebAddressBookTests
             Type(By.Name("notes"), contact.Notes);
             return this;
         }
-        public ContactHelper SelectCheckBox(int number)
+        public ContactHelper SelectCheckBox(int index)
         {
-            Driver.FindElement(By.XPath($"(//input[@name='selected[]'])[{number}]")).Click();
+            Driver.FindElement(By.XPath($"(//input[@name='selected[]'])[{index + 1}]")).Click();
             return this;
         }
 
         public ContactHelper InitContactEditIcon(int indexOfContact)
         {
-            Driver.FindElement(By.XPath($"(//img[@title='Edit'])[{indexOfContact}]")).Click();
+            Driver.FindElement(By.XPath($"(//img[@title='Edit'])[{indexOfContact+1}]")).Click();
             return this;
         }
 
         public bool VerifyContactExists(int indexOfContact, ContactData contactInfoForCreation)
         {
             Manager.Navigator.GoToHomePage();
-            while (!IsElementPresent(By.XPath($"(//tr[@name='entry'])[{indexOfContact}]")))
+            while (!IsElementPresent(By.XPath($"(//tr[@name='entry'])[{indexOfContact+1}]")))
             {
                 contactInfoForCreation = new ContactData(AuthTestBase.RandomString(10), AuthTestBase.RandomString(10));
                 Create(contactInfoForCreation);

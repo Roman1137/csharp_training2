@@ -87,7 +87,7 @@ namespace WebAddressBookTests
         public bool VerifyGroupExists(int index, GroupData infoForCreation)
         {
             Manager.Navigator.GoToGroupsPage();
-            while (!IsElementPresent(By.XPath($"(//input[@name='selected[]'])[{index}]")))
+            while (!IsElementPresent(By.XPath($"(//input[@name='selected[]'])[{index+1}]")))
             {
                 infoForCreation = new GroupData(AuthTestBase.RandomString(10));
                 Create(infoForCreation);
@@ -97,7 +97,7 @@ namespace WebAddressBookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            Driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index) + "]")).Click();
+            Driver.FindElement(By.XPath($"(//input[@name='selected[]'])[{index+1}]")).Click();
             return this;
         }
 
