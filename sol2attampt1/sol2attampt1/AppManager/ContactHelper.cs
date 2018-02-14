@@ -17,59 +17,49 @@ namespace WebAddressBookTests
         { }
         public ContactHelper Create(ContactData contact)
         {
-            manager.Navigator.GoToContactsPage();
+            Manager.Navigator.GoToContactsPage();
             FillAllContactForms(contact).
             SubmitContactCreations();
-            manager.Navigator.GoToHomePage();
+            Manager.Navigator.GoToHomePage();
             return this;
-        }
-
-        public List<ContactData> GetContactsList()
-        {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-
-            ICollection<IWebElement> elements = SearchCollection(By.CssSelector("[name=entry]"));
-            foreach (IWebElement element in elements)
-            {
-                string lastName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(2)")).Text;
-                string firstName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(3)")).Text;
-                contacts.Add(new ContactData(firstName, lastName));
-            }
-            return contacts;
         }
 
         public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate)
         {
-            manager.Navigator.GoToHomePage();
+            Manager.Navigator.GoToHomePage();
             InitContactEditIcon(numberOfItemTModify);
             FillAllContactForms(infoForUpdate);
-            SubmitContectEdition();
-            manager.Navigator.GoToHomePage();
+            SubmitContactModification();
+            Manager.Navigator.GoToHomePage();
             return this;
         }
         public ContactHelper Delete(int numberOfElementToDelete)
         {
-            manager.Navigator.GoToHomePage();
+            Manager.Navigator.GoToHomePage();
             SelectCheckBox(numberOfElementToDelete).
             SubmitContactRemoval();
-            manager.Navigator.GoToHomePage();
-            return this;
-        }
-        public ContactHelper SubmitContectEdition()
-        {
-            Driver.FindElement(By.Name("update")).Click();
-            return this;
-        }
-        public ContactHelper InitContactEditIcon(int indexOfContact)
-        {
-            Driver.FindElement(By.CssSelector($"tbody tr:nth-child({indexOfContact + 1}) [title='Edit']")).Click();
+            Manager.Navigator.GoToHomePage();
             return this;
         }
 
         public ContactHelper SubmitContactCreations()
         {
             Driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
+            return this;
+        }
+        public ContactHelper SubmitContactModification()
+        {
+            Driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
+            return this;
+        }
+
+        public ContactHelper SubmitContactRemoval()
+        {
+            Driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            Driver.SwitchTo().Alert().Accept(); // it will click on OK button
+            contactCache = null;
             return this;
         }
 
@@ -105,28 +95,49 @@ namespace WebAddressBookTests
             Driver.FindElement(By.XPath($"(//input[@name='selected[]'])[{number}]")).Click();
             return this;
         }
-        public ContactHelper SubmitContactRemoval()
+
+        public ContactHelper InitContactEditIcon(int indexOfContact)
         {
-            Driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            Driver.SwitchTo().Alert().Accept(); // it will click on OK button
+            Driver.FindElement(By.XPath($"(//img[@title='Edit'])[{indexOfContact}]")).Click();
             return this;
         }
+
         public bool VerifyContactExists(int indexOfContact, ContactData contactInfoForCreation)
         {
-            manager.Navigator.GoToHomePage();
+            Manager.Navigator.GoToHomePage();
             while (!IsElementPresent(By.XPath($"(//tr[@name='entry'])[{indexOfContact}]")))
             {
+                contactInfoForCreation = new ContactData(AuthTestBase.RandomString(10), AuthTestBase.RandomString(10));
                 Create(contactInfoForCreation);
             }
             return true;
         }
 
-        public ICollection<IWebElement> SearchCollection(By locator)
+        public List<ContactData> contactCache { get; private set; }
+
+        public List<ContactData> GetContactsList()
         {
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
-            ICollection<IWebElement> collection = Driver.FindElements(locator);
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            return collection;
+            if (contactCache == null)
+            {
+                contactCache = new List<ContactData>();
+                Manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> elements = SearchCollection(By.CssSelector("[name=entry]"));
+                foreach (IWebElement element in elements)
+                {
+                    string lastName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(2)")).Text;
+                    string firstName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(3)")).Text;
+                    contactCache.Add(new ContactData(firstName, lastName)
+                    {
+                        Id =element.FindElement(By.Name("selected[]")).GetAttribute("value")
+                    });
+                }
+            }
+            return new List<ContactData>(contactCache);
+        }
+
+        public int GetContactCount()
+        {
+            return SearchCollection(By.CssSelector("[name=entry]")).Count;
         }
     }
 }

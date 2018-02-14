@@ -15,7 +15,7 @@ namespace WebAddressBookTests
     public class ApplicationManager
     {
         public IWebDriver Driver { get; set; }
-        public string BaseURL { get; set; }
+        public string BaseUrl { get; set; }
 
         public LoginHelper Auth { get; set; }
         public NavigationHelper Navigator { get; set; }
@@ -26,11 +26,11 @@ namespace WebAddressBookTests
         private ApplicationManager ()
         {
             Driver = new ChromeDriver(); 
-            BaseURL = "http://localhost/";
+            BaseUrl = "http://localhost/";
             Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             //initialize helper classes
             Auth = new LoginHelper(this);
-            Navigator = new NavigationHelper(this, BaseURL);
+            Navigator = new NavigationHelper(this, BaseUrl);
             Group = new GroupHelper(this);
             Contact = new ContactHelper(this);
         }

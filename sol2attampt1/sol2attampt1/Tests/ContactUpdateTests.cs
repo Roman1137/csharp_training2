@@ -13,22 +13,37 @@ namespace WebAddressBookTests
     [TestFixture]
     public class ContactUpdateTests : AuthTestBase
     {
-        ContactData contactInfoForCreation = new ContactData("Roman", "Borodavka");
+        ContactData contactInfoForCreation = new ContactData(RandomString(10), RandomString(10));
 
         [Test]
         public void VerifyContactModication()
         {
-            ContactData contactInfoForUpdate = new ContactData("Vasya", "Pupkin");
+
+            ContactData contactInfoForUpdate = new ContactData(RandomString(10), RandomString(10));
             const int numberOfItemTModify = 5;
             app.Contact.VerifyContactExists(numberOfItemTModify, contactInfoForCreation);
             List<ContactData> contactsBefore = app.Contact.GetContactsList();
+            ContactData contactToBeModified = contactsBefore[numberOfItemTModify - 1];
+
             app.Contact.Modify(numberOfItemTModify,contactInfoForUpdate);
+
+            Assert.AreEqual(contactsBefore.Count,app.Contact.GetContactCount());
+
             List<ContactData> contactsAfter = app.Contact.GetContactsList();
             contactsBefore[numberOfItemTModify-1].LastName = contactInfoForUpdate.LastName;
             contactsBefore[numberOfItemTModify-1].FirstName = contactInfoForUpdate.FirstName;
             contactsBefore.Sort();
             contactsAfter.Sort();
             Assert.AreEqual(contactsBefore, contactsAfter);
+
+            foreach (ContactData contact in contactsAfter)
+            {
+                if (contact.Id == contactToBeModified.Id)
+                {
+                    Assert.AreEqual(contactInfoForUpdate.FirstName, contact.FirstName);
+                    Assert.AreEqual(contactInfoForUpdate.LastName,contact.LastName);
+                }
+            }
         }
     }
 }

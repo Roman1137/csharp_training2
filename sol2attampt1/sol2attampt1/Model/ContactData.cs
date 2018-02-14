@@ -26,13 +26,14 @@ namespace WebAddressBookTests
         public string AddressSecondField { get; set; } = "Address SecondField";
         public string HomeSecondField { get; set; } = "Home SecondField";
         public string Notes { get; set; } = "Notes";
+        public string Id { get; set; }
 
         public ContactData(string firstName, string lastName)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
         }
-        public ContactData() { }
+        public ContactData(object v) { }
         public bool Equals(ContactData other)
         {
             if (ReferenceEquals(other, null))
@@ -46,10 +47,11 @@ namespace WebAddressBookTests
         {
             if (ReferenceEquals(other, null))
                 return 1;
-            return (FirstName + "," + LastName).CompareTo(other.FirstName + "," + other.LastName);
+            return String.Compare((FirstName + "," + LastName), other.FirstName + "," + other.LastName, StringComparison.Ordinal);
         }
 
         public override string ToString() => FirstName +","+LastName;
+        public override int GetHashCode() => Tuple.Create(FirstName, LastName).GetHashCode();
 
     }
 }

@@ -13,11 +13,11 @@ namespace WebAddressBookTests
 {
     public class HelperBase
     {
-        public ApplicationManager manager { get; set; }
+        public ApplicationManager Manager { get; set; }
         public IWebDriver Driver { get; set; }
         public HelperBase(ApplicationManager manager)
         {
-            this.manager = manager;
+            this.Manager = manager;
             this.Driver = manager.Driver;
         }
         public void Type(By locator, string text)
@@ -36,6 +36,14 @@ namespace WebAddressBookTests
             if (collection.Count == 0)
                 return false;
             return collection.First().Displayed;
+        }
+
+        public ICollection<IWebElement> SearchCollection(By locator)
+        {
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
+            ICollection<IWebElement> collection = Driver.FindElements(locator);
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            return collection;
         }
     }
 }

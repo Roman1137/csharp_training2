@@ -11,6 +11,7 @@ namespace WebAddressBookTests
         public string Name { get; set; }
         public string Header { get; set; }  = "";
         public string Footer { get; set; }  = "";
+        public string Id { get; set; }
 
         public GroupData(string name)
         {
@@ -37,7 +38,7 @@ namespace WebAddressBookTests
         {
             if (ReferenceEquals(other, null))
                 return 1;
-            return Name.CompareTo(other.Name);
+            return String.Compare(Name, other.Name, StringComparison.Ordinal);
         }
 
         public override string ToString() => Name;
