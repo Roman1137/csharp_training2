@@ -13,7 +13,7 @@ namespace WebAddressBookTests
     {
         ContactData contactInfoForCreation = new ContactData(RandomString(10), RandomString(10));
         [Test]
-        public void VerifyContactInformationReflection()
+        public void VerifyContactInformationAtMainPage()
         {
             const int numberOfContact = 0;
             App.Contact.VerifyContactExists(numberOfContact, contactInfoForCreation);
@@ -28,7 +28,7 @@ namespace WebAddressBookTests
         }
 
         [Test]
-        public void VerifyContactInformationDetailsReflection()
+        public void VerifyContactInformationAtDetailsPage()
         {
             const int numberOfContact = 0;
             App.Contact.VerifyContactExists(numberOfContact, contactInfoForCreation);

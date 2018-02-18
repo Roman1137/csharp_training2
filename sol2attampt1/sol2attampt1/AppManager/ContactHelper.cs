@@ -201,10 +201,9 @@ namespace WebAddressBookTests
             Manager.Navigator.GoToHomePage();
             OpenDetailsForm(numberOfContact);
             var allInfo = (Driver.FindElement(By.CssSelector("#content")).Text);
-            var cleanedInfo = Regex.Replace(allInfo, "[ -()\n\r]", "");
             return new ContactData
             {
-                AllInfo = cleanedInfo
+                AllInfo = allInfo
             };
         }
 

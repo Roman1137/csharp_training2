@@ -29,7 +29,7 @@ namespace WebAddressBookTests
         public string EmailThirdField { get; set; } = "Email3";
         public string Homepage { get; set; } = "Homepage";
         public string AddressSecondField { get; set; } = "Address SecondField";
-        public string HomeSecondField { get; set; } = "HomePhone SecondField";
+        public string HomeSecondField { get; set; } = "+3 (245) 5 7 4 22";
         public string Notes { get; set; } = "Notes";
         public string Id { get; set; }
 
@@ -61,7 +61,7 @@ namespace WebAddressBookTests
                             $"{CleanUp(Notes)}";
                 }
             }
-            set => allInfo = value;
+            set => allInfo = CleanUp(value);
         }
 
         public string AllPhones
