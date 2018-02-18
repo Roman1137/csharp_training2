@@ -15,7 +15,7 @@ namespace WebAddressBookTests
         [Test]
         public void VerifyContactInformationAtMainPage()
         {
-            const int numberOfContact = 0;
+            const int numberOfContact = 3;
             App.Contact.VerifyContactExists(numberOfContact, contactInfoForCreation);
             ContactData fromTable = App.Contact.GetContactInfoFromTable(numberOfContact);
             ContactData fromForm = App.Contact.GetContactInfoFromEditForm(numberOfContact);
