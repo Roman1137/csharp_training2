@@ -105,7 +105,7 @@ namespace WebAddressBookTests
             }
             else
             {
-                return Regex.Replace(value, "[ -()\n\r]", "");
+                return Regex.Replace(value, @"[ \-(\n\r)]", "");
             }
         }
 
