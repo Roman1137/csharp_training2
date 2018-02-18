@@ -27,7 +27,7 @@ namespace WebAddressBookTests
         public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate)
         {
             Manager.Navigator.GoToHomePage();
-            InitContactEditIcon(numberOfItemTModify);
+            InitContactModification(numberOfItemTModify);
             FillAllContactForms(infoForUpdate);
             SubmitContactModification();
             Manager.Navigator.GoToHomePage();
@@ -75,9 +75,9 @@ namespace WebAddressBookTests
             Type(By.Name("company"), contact.Company);
             Type(By.Name("address"), contact.Address);
             //Filling fields in the second block
-            Type(By.Name("home"), contact.Home);
-            Type(By.Name("mobile"), contact.Mobile);
-            Type(By.Name("work"), contact.Work);
+            Type(By.Name("home"), contact.HomePhone);
+            Type(By.Name("mobile"), contact.MobilePhone);
+            Type(By.Name("work"), contact.WorkPhone);
             Type(By.Name("fax"), contact.Fax);
             //Filling fields in the third block
             Type(By.Name("email"), contact.Email);
@@ -86,7 +86,7 @@ namespace WebAddressBookTests
             Type(By.Name("homepage"), contact.Homepage);
             //Filling fields in the "Secondary" block
             Type(By.Name("address2"), contact.AddressSecondField);
-            Type(By.Name("phone2"), contact.Home);
+            Type(By.Name("phone2"), contact.HomeSecondField);
             Type(By.Name("notes"), contact.Notes);
             return this;
         }
@@ -96,16 +96,16 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper InitContactEditIcon(int indexOfContact)
+        public ContactHelper InitContactModification(int indexOfContact)
         {
-            Driver.FindElement(By.XPath($"(//img[@title='Edit'])[{indexOfContact+1}]")).Click();
+            Driver.FindElement(By.XPath($"(//img[@title='Edit'])[{indexOfContact + 1}]")).Click();
             return this;
         }
 
         public bool VerifyContactExists(int indexOfContact, ContactData contactInfoForCreation)
         {
             Manager.Navigator.GoToHomePage();
-            while (!IsElementPresent(By.XPath($"(//tr[@name='entry'])[{indexOfContact+1}]")))
+            while (!IsElementPresent(By.XPath($"(//tr[@name='entry'])[{indexOfContact + 1}]")))
             {
                 contactInfoForCreation = new ContactData(AuthTestBase.RandomString(10), AuthTestBase.RandomString(10));
                 Create(contactInfoForCreation);
@@ -122,13 +122,14 @@ namespace WebAddressBookTests
                 contactCache = new List<ContactData>();
                 Manager.Navigator.GoToHomePage();
                 ICollection<IWebElement> elements = SearchCollection(By.CssSelector("[name=entry]"));
+                //string allText = Driver.FindElement(By.TagName("tbody")).Text;
                 foreach (IWebElement element in elements)
                 {
-                    string lastName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(2)")).Text;
-                    string firstName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(3)")).Text;
+                    var lastName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(2)")).Text;
+                    var firstName = element.FindElement(By.CssSelector("[name=entry] td:nth-of-type(3)")).Text;
                     contactCache.Add(new ContactData(firstName, lastName)
                     {
-                        Id =element.FindElement(By.Name("selected[]")).GetAttribute("value")
+                        Id = element.FindElement(By.Name("selected[]")).GetAttribute("value")
                     });
                 }
             }
@@ -138,6 +139,79 @@ namespace WebAddressBookTests
         public int GetContactCount()
         {
             return SearchCollection(By.CssSelector("[name=entry]")).Count;
+        }
+
+        public ContactData GetContactInfoFromTable(int contactIndex)
+        {
+            Manager.Navigator.GoToHomePage();
+            IList<IWebElement> cells = SearchCollection(By.Name("entry"));
+            IList<IWebElement> cellsOfIndex = SearchCollection(By.TagName("td"), cells[contactIndex]);
+
+            var lastName = cellsOfIndex[1].Text;
+            var firstName = cellsOfIndex[2].Text;
+            var address = cellsOfIndex[3].Text;
+
+            var allEmails = cellsOfIndex[4].Text;
+            var allPhones = cellsOfIndex[5].Text;
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                AllEmails = allEmails,
+                AllPhones = allPhones
+            };
+        }
+
+        public ContactData GetContactInfoFromEditForm(int contactIndex)
+        {
+            Manager.Navigator.GoToHomePage();
+            InitContactModification(contactIndex);
+            var firstName = Driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            var lastName = Driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            var nickName = Driver.FindElement(By.Name("nickname")).GetAttribute("value");
+
+            var title = Driver.FindElement(By.Name("title")).GetAttribute("value");
+            var address = Driver.FindElement(By.Name("address")).Text;
+
+            var email = Driver.FindElement(By.Name("email")).GetAttribute("value");
+            var emailSecond = Driver.FindElement(By.Name("email2")).GetAttribute("value");
+            var emailThird = Driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            var homePhone = Driver.FindElement(By.Name("home")).GetAttribute("value");
+            var mobilePhone = Driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            var workPhone = Driver.FindElement(By.Name("work")).GetAttribute("value");
+            var homePhoneSecond = Driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                Email = email,
+                EmailSecondField = emailSecond,
+                EmailThirdField = emailThird,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+                HomeSecondField = homePhoneSecond,
+                Tittle = title,
+                NickName = nickName
+            };
+        }
+
+        public ContactData GetContactInfoFromDetailsForm(int numberOfContact)
+        {
+            Manager.Navigator.GoToHomePage();
+            OpenDetailsForm(numberOfContact);
+            var allInfo = (Driver.FindElement(By.CssSelector("#content")).Text);
+            var cleanedInfo = Regex.Replace(allInfo, "[ -()\n\r]", "");
+            return new ContactData
+            {
+                AllInfo = cleanedInfo
+            };
+        }
+
+        public ContactHelper OpenDetailsForm(int numberOfContact)
+        {
+            Driver.FindElement(By.XPath($"(//img[@title='Details'])[{numberOfContact + 1}]")).Click();
+            return this;
         }
     }
 }

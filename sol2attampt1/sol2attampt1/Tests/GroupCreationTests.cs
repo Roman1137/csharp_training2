@@ -20,13 +20,13 @@ namespace WebAddressBookTests
         public void VerifyGroupCreation()
         {
             GroupData groupInfoForCreation = new GroupData(RandomString(10), RandomString(10), RandomString(10));
-            List<GroupData> groupsBefore = app.Group.GetGroupsList();
+            List<GroupData> groupsBefore = App.Group.GetGroupsList();
 
-            app.Group.Create(groupInfoForCreation);
+            App.Group.Create(groupInfoForCreation);
 
-            Assert.AreEqual(groupsBefore.Count + 1, app.Group.GetGroupCount());
+            Assert.AreEqual(groupsBefore.Count + 1, App.Group.GetGroupCount());
 
-            List<GroupData> groupsAfter = app.Group.GetGroupsList();
+            List<GroupData> groupsAfter = App.Group.GetGroupsList();
             var groupAfterMaxId = groupsAfter.Max(x => x.Id);
 
             foreach (GroupData groupAfter in groupsAfter)
@@ -42,14 +42,14 @@ namespace WebAddressBookTests
         [Test]
         public void VerifyEmptyGroupCreation()
         {
-            GroupData emptyGroupInfo = new GroupData("");
-            List<GroupData> groupsBefore = app.Group.GetGroupsList();
+            GroupData emptyGroupInfo = new GroupData{Name =""};
+            List<GroupData> groupsBefore = App.Group.GetGroupsList();
 
-            app.Group.Create(emptyGroupInfo);
+            App.Group.Create(emptyGroupInfo);
 
-            Assert.AreEqual(groupsBefore.Count + 1, app.Group.GetGroupCount());
+            Assert.AreEqual(groupsBefore.Count + 1, App.Group.GetGroupCount());
 
-            List<GroupData> groupsAfter = app.Group.GetGroupsList();
+            List<GroupData> groupsAfter = App.Group.GetGroupsList();
             var groupAfterMaxId = groupsAfter.Max(x => x.Id);
 
             foreach (GroupData groupAfter in groupsAfter)
@@ -67,14 +67,14 @@ namespace WebAddressBookTests
         //[NUnit.Framework.Ignore("test")]
         public void VerifyBadNameGroupCreation()
         {
-            GroupData badGroupInfo = new GroupData("a'a");
-            List<GroupData> groupsBefore = app.Group.GetGroupsList();
+            GroupData badGroupInfo = new GroupData{Name = "a'a" };
+            List<GroupData> groupsBefore = App.Group.GetGroupsList();
 
-            app.Group.Create(badGroupInfo);
+            App.Group.Create(badGroupInfo);
 
-            Assert.AreEqual(groupsBefore.Count + 1, app.Group.GetGroupCount());
+            Assert.AreEqual(groupsBefore.Count + 1, App.Group.GetGroupCount());
 
-            List<GroupData> groupsAfter = app.Group.GetGroupsList();
+            List<GroupData> groupsAfter = App.Group.GetGroupsList();
             var groupAfterMaxId = groupsAfter.Max(x => x.Id);
 
             foreach (GroupData groupAfter in groupsAfter)

@@ -19,15 +19,15 @@ namespace WebAddressBookTests
         public void VerifyGroupRemoval()
         {
             const int numberOfItemToDelete = 5;
-            app.Group.VerifyGroupExists(numberOfItemToDelete, groupInfoForCreation);
-            List<GroupData> groupsBefore = app.Group.GetGroupsList();
+            App.Group.VerifyGroupExists(numberOfItemToDelete, groupInfoForCreation);
+            List<GroupData> groupsBefore = App.Group.GetGroupsList();
             GroupData groupToBeRemoved = groupsBefore[numberOfItemToDelete];
 
-            app.Group.Remove(numberOfItemToDelete);
+            App.Group.Remove(numberOfItemToDelete);
 
-            Assert.AreEqual(groupsBefore.Count - 1, app.Group.GetGroupCount());
+            Assert.AreEqual(groupsBefore.Count - 1, App.Group.GetGroupCount());
 
-            List<GroupData> groupsAfter = app.Group.GetGroupsList();
+            List<GroupData> groupsAfter = App.Group.GetGroupsList();
             groupsBefore.RemoveAt(numberOfItemToDelete);
             groupsAfter.Sort();
             groupsBefore.Sort();

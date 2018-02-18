@@ -12,7 +12,7 @@ namespace WebAddressBookTests
         [SetUp]
         public void SetupLogin()
         {
-            app.Auth.Login(new AccountData("Admin", "secret"));
+            App.Auth.Login(new AccountData("Admin", "secret"));
         }
 
         public static Random random = new Random((int)DateTime.Now.Ticks);

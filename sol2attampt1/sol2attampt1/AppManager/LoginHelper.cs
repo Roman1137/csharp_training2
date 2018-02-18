@@ -9,13 +9,13 @@ using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressBookTests
 {
-    public class LoginHelper:HelperBase
-    { 
-        public LoginHelper(ApplicationManager manager) :base(manager)
+    public class LoginHelper : HelperBase
+    {
+        public LoginHelper(ApplicationManager manager) : base(manager)
         { }
         public void Login(AccountData account)
         {
-            if(IsLoggedIn())
+            if (IsLoggedIn())
             {
                 if (IsLoggedIn(account))
                 {
@@ -23,8 +23,8 @@ namespace WebAddressBookTests
                 }
                 Logout();
             }
-            Type(By.Name("user"),account.UserName);
-            Type(By.Name("pass"),account.Password);
+            Type(By.Name("user"), account.UserName);
+            Type(By.Name("pass"), account.Password);
             Driver.FindElement(By.CssSelector("input[type=\"submit\"]")).Click();
         }
 
@@ -33,7 +33,7 @@ namespace WebAddressBookTests
             if (IsLoggedIn())
             {
                 Driver.FindElement(By.LinkText("Logout")).Click();
-            } 
+            }
         }
         public bool IsLoggedIn()
         {
@@ -42,8 +42,13 @@ namespace WebAddressBookTests
         public bool IsLoggedIn(AccountData account)
         {
             return IsLoggedIn()
-                && Driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text 
-                == "(" + account.UserName + ")"; 
+                   && GetLoggedUserName() == account.UserName;
+        }
+
+        private string GetLoggedUserName()
+        {
+            string text = Driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
+            return text.Substring(1, text.Length - 2);
         }
     }
 }

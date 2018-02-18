@@ -9,11 +9,11 @@ namespace WebAddressBookTests
     [TestFixture]
     public class TestBase
     {
-        public ApplicationManager app { get; set; }
+        public ApplicationManager App { get; set; }
         [SetUp]
         public void SetupApplicationManager()
         {
-            app = ApplicationManager.GetInstance();
+            App = ApplicationManager.GetInstance();
         }
     }
 }

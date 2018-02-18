@@ -19,13 +19,13 @@ namespace WebAddressBookTests
         public void VerifyContactCreation()
         {
             ContactData contactInfoForCreation = new ContactData(RandomString(10), RandomString(10));
-            List<ContactData> contactsBefore = app.Contact.GetContactsList();
+            List<ContactData> contactsBefore = App.Contact.GetContactsList();
 
-            app.Contact.Create(contactInfoForCreation);
+            App.Contact.Create(contactInfoForCreation);
 
-            Assert.AreEqual(contactsBefore.Count + 1, app.Contact.GetContactCount());
+            Assert.AreEqual(contactsBefore.Count + 1, App.Contact.GetContactCount());
 
-            List<ContactData> contactsAfter = app.Contact.GetContactsList();
+            List<ContactData> contactsAfter = App.Contact.GetContactsList();
 
             var contactAfterMaxId = contactsAfter.Max(x => x.Id);
 
@@ -47,13 +47,13 @@ namespace WebAddressBookTests
         public void VerifyEmptryContactCreation()
         {
             ContactData emptyContactInfo = new ContactData("", "");
-            List<ContactData> contactsBefore = app.Contact.GetContactsList();
+            List<ContactData> contactsBefore = App.Contact.GetContactsList();
 
-            app.Contact.Create(emptyContactInfo);
+            App.Contact.Create(emptyContactInfo);
 
-            Assert.AreEqual(contactsBefore.Count + 1, app.Contact.GetContactCount());
+            Assert.AreEqual(contactsBefore.Count + 1, App.Contact.GetContactCount());
 
-            List<ContactData> contactsAfter = app.Contact.GetContactsList();
+            List<ContactData> contactsAfter = App.Contact.GetContactsList();
             var contactAfterMaxId = contactsAfter.Max(x => x.Id);
 
             foreach (ContactData contactAfter in contactsAfter)

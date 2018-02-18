@@ -38,12 +38,21 @@ namespace WebAddressBookTests
             return collection.First().Displayed;
         }
 
-        public ICollection<IWebElement> SearchCollection(By locator)
+        public IList<IWebElement> SearchCollection(By locator, IWebElement toStartSearchWith = null)
         {
             Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
-            ICollection<IWebElement> collection = Driver.FindElements(locator);
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            return collection;
+            if (toStartSearchWith == null)
+            {
+                IList<IWebElement> collection = Driver.FindElements(locator);
+                Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                return collection;
+            }
+            else
+            {
+                IList<IWebElement> collection = toStartSearchWith.FindElements(locator);
+                Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                return collection;
+            }
         }
     }
 }

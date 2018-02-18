@@ -18,15 +18,15 @@ namespace WebAddressBookTests
         public void VerifyContactRemoval()
         {
             const int numberOfItemToDelete = 3;
-            app.Contact.VerifyContactExists(numberOfItemToDelete, contactInfoForCreation);
-            List<ContactData> contactsBefore = app.Contact.GetContactsList();
+            App.Contact.VerifyContactExists(numberOfItemToDelete, contactInfoForCreation);
+            List<ContactData> contactsBefore = App.Contact.GetContactsList();
             ContactData contactToBeRemoved = contactsBefore[numberOfItemToDelete];
 
-            app.Contact.Delete(numberOfItemToDelete);
+            App.Contact.Delete(numberOfItemToDelete);
 
-            Assert.AreEqual(contactsBefore.Count - 1, app.Contact.GetContactCount());
+            Assert.AreEqual(contactsBefore.Count - 1, App.Contact.GetContactCount());
 
-            List<ContactData> contactsAfter = app.Contact.GetContactsList();
+            List<ContactData> contactsAfter = App.Contact.GetContactsList();
             contactsBefore.RemoveAt(numberOfItemToDelete);
             contactsAfter.Sort();
             contactsBefore.Sort();

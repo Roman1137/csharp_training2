@@ -18,15 +18,15 @@ namespace WebAddressBookTests
             GroupData groupInfoForUpdate = new GroupData(RandomString(10), RandomString(10), RandomString(10));
             const int numberOfItemToEdited = 5;
             groupInfoForUpdate.Footer = null;
-            app.Group.VerifyGroupExists(numberOfItemToEdited, groupInfoForCreation);
-            List<GroupData> groupsBefore = app.Group.GetGroupsList();
+            App.Group.VerifyGroupExists(numberOfItemToEdited, groupInfoForCreation);
+            List<GroupData> groupsBefore = App.Group.GetGroupsList();
             GroupData groupToBeModified = groupsBefore[numberOfItemToEdited];
 
-            app.Group.Modify(numberOfItemToEdited,groupInfoForUpdate);
+            App.Group.Modify(numberOfItemToEdited,groupInfoForUpdate);
 
-            Assert.AreEqual(groupsBefore.Count, app.Group.GetGroupCount());
+            Assert.AreEqual(groupsBefore.Count, App.Group.GetGroupCount());
 
-            List<GroupData> groupsAfter = app.Group.GetGroupsList();
+            List<GroupData> groupsAfter = App.Group.GetGroupsList();
             groupsBefore[numberOfItemToEdited].Name = groupInfoForUpdate.Name;
             groupsBefore.Sort();
             groupsAfter.Sort();
