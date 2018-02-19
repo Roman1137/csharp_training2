@@ -48,16 +48,16 @@ namespace WebAddressBookTests
                             $"{CleanUp(Tittle)}" +
                             $"{CleanUp(Company)}" +
                             $"{CleanUp(Address)}" +
-                            $"H:{CleanUp(HomePhone)}" +
-                            $"M:{CleanUp(MobilePhone)}" +
-                            $"W:{CleanUp(WorkPhone)}" +
-                            $"F:{CleanUp(Fax)}" +
+                            $"{CleanUp(HomePhone)}" +
+                            $"{CleanUp(MobilePhone)}" +
+                            $"{CleanUp(WorkPhone)}" +
+                            $"{CleanUp(Fax)}" +
                             $"{CleanUp(Email)}" +
                             $"{CleanUp(EmailSecondField)}" +
                             $"{CleanUp(EmailThirdField)}" +
-                            $"Homepage:{CleanUp(Homepage)}" +
+                            $"{CleanUp(Homepage)}" +
                             $"{CleanUp(AddressSecondField)}" +
-                            $"P:{CleanUp(HomeSecondField)}" +
+                            $"{CleanUp(HomeSecondField)}" +
                             $"{CleanUp(Notes)}";
                 }
             }
@@ -105,7 +105,7 @@ namespace WebAddressBookTests
             }
             else
             {
-                return Regex.Replace(value, "[ -()\n\r]", "");
+                return Regex.Replace(value, @"[ \-(\n\r)]", "");
             }
         }
 

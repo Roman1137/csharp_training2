@@ -33,7 +33,7 @@ namespace WebAddressBookTests
             const int numberOfContact = 0;
             App.Contact.VerifyContactExists(numberOfContact, contactInfoForCreation);
             ContactData fromDetailsForm = App.Contact.GetContactInfoFromDetailsForm(numberOfContact);
-            ContactData fromForm = App.Contact.GetContactInfoFromEditForm(numberOfContact);
+            ContactData fromForm = App.Contact.GetContactInfoFromEditForm(numberOfContact,true);
 
             Assert.AreEqual(fromForm.AllInfo, fromDetailsForm.AllInfo);
         }

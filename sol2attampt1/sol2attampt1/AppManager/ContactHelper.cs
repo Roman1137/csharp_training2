@@ -162,37 +162,65 @@ namespace WebAddressBookTests
             };
         }
 
-        public ContactData GetContactInfoFromEditForm(int contactIndex)
+        public ContactData GetContactInfoFromEditForm(int contactIndex, bool isItFordetailsPage = false)
         {
             Manager.Navigator.GoToHomePage();
             InitContactModification(contactIndex);
-            var firstName = Driver.FindElement(By.Name("firstname")).GetAttribute("value");
-            var lastName = Driver.FindElement(By.Name("lastname")).GetAttribute("value");
-            var nickName = Driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            var firstName = GetTextOfAttributeValue(By.Name("firstname"), "value");
+            var lastName = GetTextOfAttributeValue(By.Name("lastname"), "value");
+            var middleName = GetTextOfAttributeValue(By.Name("middlename"), "value");
+            var nickName = GetTextOfAttributeValue(By.Name("nickname"), "value");
 
-            var title = Driver.FindElement(By.Name("title")).GetAttribute("value");
+            var companyName = GetTextOfAttributeValue(By.Name("company"), "value");
+            var title = GetTextOfAttributeValue(By.Name("title"), "value");
             var address = Driver.FindElement(By.Name("address")).Text;
 
-            var email = Driver.FindElement(By.Name("email")).GetAttribute("value");
-            var emailSecond = Driver.FindElement(By.Name("email2")).GetAttribute("value");
-            var emailThird = Driver.FindElement(By.Name("email3")).GetAttribute("value");
+            var homePhoneValue = GetTextOfAttributeValue(By.Name("home"), "value");
+            var homePhone = SelectTheRightValue(homePhoneValue, "H:", isItFordetailsPage);
 
-            var homePhone = Driver.FindElement(By.Name("home")).GetAttribute("value");
-            var mobilePhone = Driver.FindElement(By.Name("mobile")).GetAttribute("value");
-            var workPhone = Driver.FindElement(By.Name("work")).GetAttribute("value");
-            var homePhoneSecond = Driver.FindElement(By.Name("phone2")).GetAttribute("value");
-            return new ContactData(firstName, lastName)
+            var mobilePhoneValue = GetTextOfAttributeValue(By.Name("mobile"), "value");
+            var mobilePhone= SelectTheRightValue(mobilePhoneValue, "M:", isItFordetailsPage);
+
+            var workPhoneValue = GetTextOfAttributeValue(By.Name("work"), "value");
+            var workPhone = SelectTheRightValue(workPhoneValue, "W:", isItFordetailsPage);
+
+            var faxValue = GetTextOfAttributeValue(By.Name("fax"), "value");
+            var fax = SelectTheRightValue(faxValue, "F:", isItFordetailsPage);
+
+            var email = GetTextOfAttributeValue(By.Name("email"), "value");
+            var emailSecond = GetTextOfAttributeValue(By.Name("email2"), "value");
+            var emailThird = GetTextOfAttributeValue(By.Name("email3"), "value");
+
+            var homepageValue = Driver.FindElement(By.Name("homepage")).GetAttribute("value");
+            var homepage = SelectTheRightValue(homepageValue, "Homepage:", isItFordetailsPage);
+
+            var addressSecond = Driver.FindElement(By.Name("address2")).Text;
+
+            var homePhoneSecondValue = Driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            var homePhoneSecond = SelectTheRightValue(homePhoneSecondValue, "P:", isItFordetailsPage);
+
+            var notes = Driver.FindElement(By.Name("notes")).Text;
+
+            return new ContactData
             {
+                FirstName = firstName,
+                LastName = lastName,
+                MiddleName = middleName,
+                NickName = nickName,
+                Company = companyName,
+                Tittle = title,
                 Address = address,
-                Email = email,
-                EmailSecondField = emailSecond,
-                EmailThirdField = emailThird,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone,
+                Fax = fax,
+                Email = email,
+                EmailSecondField = emailSecond,
+                EmailThirdField = emailThird,
+                Homepage = homepage,
+                AddressSecondField = addressSecond,
                 HomeSecondField = homePhoneSecond,
-                Tittle = title,
-                NickName = nickName
+                Notes = notes
             };
         }
 
@@ -211,6 +239,27 @@ namespace WebAddressBookTests
         {
             Driver.FindElement(By.XPath($"(//img[@title='Details'])[{numberOfContact + 1}]")).Click();
             return this;
+        }
+
+        public string GetTextOfAttributeValue(By locator, string attributeValue)
+        {
+            return Driver.FindElement(locator).GetAttribute(attributeValue);
+        }
+
+        public string SelectTheRightValue(string fieldValue, string additionalSymbol, bool fordetailsPage = false)
+        {
+            if (fieldValue != "" && fordetailsPage)
+            {
+                return additionalSymbol + fieldValue;
+            }
+            else if (fieldValue != "")
+            {
+                return fieldValue;
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 }
