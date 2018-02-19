@@ -15,7 +15,7 @@ namespace WebAddressBookTests
         [Test]
         public void VerifyContactInformationAtMainPage()
         {
-            const int numberOfContact = 3;
+            const int numberOfContact = 0;
             App.Contact.VerifyContactExists(numberOfContact, contactInfoForCreation);
             ContactData fromTable = App.Contact.GetContactInfoFromTable(numberOfContact);
             ContactData fromForm = App.Contact.GetContactInfoFromEditForm(numberOfContact);
@@ -30,10 +30,10 @@ namespace WebAddressBookTests
         [Test]
         public void VerifyContactInformationAtDetailsPage()
         {
-            const int numberOfContact = 3;
+            const int numberOfContact = 0;
             App.Contact.VerifyContactExists(numberOfContact, contactInfoForCreation);
             ContactData fromDetailsForm = App.Contact.GetContactInfoFromDetailsForm(numberOfContact);
-            ContactData fromForm = App.Contact.GetContactInfoFromEditForm(numberOfContact);
+            ContactData fromForm = App.Contact.GetContactInfoFromEditForm(numberOfContact,true);
 
             Assert.AreEqual(fromForm.AllInfo, fromDetailsForm.AllInfo);
         }
