@@ -14,11 +14,39 @@ namespace WebAddressBookTests
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-
-        [Test]
-        public void VerifyContactCreation()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            ContactData contactInfoForCreation = new ContactData(RandomString(10), RandomString(10));
+            List<ContactData> groups = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                groups.Add(new ContactData
+                {
+                    FirstName = GenerateRandomString(100),
+                    LastName = GenerateRandomString(100),
+                    MiddleName = GenerateRandomString(100),
+                    NickName = GenerateRandomString(100),
+                    Company = GenerateRandomString(100),
+                    Tittle = GenerateRandomString(100),
+                    Address = GenerateRandomString(100),
+                    HomePhone = GenerateRandomString(100),
+                    MobilePhone = GenerateRandomString(100),
+                    WorkPhone = GenerateRandomString(100),
+                    Fax = GenerateRandomString(100),
+                    Email = GenerateRandomString(100),
+                    EmailSecondField = GenerateRandomString(100),
+                    EmailThirdField = GenerateRandomString(100),
+                    Homepage = GenerateRandomString(100),
+                    AddressSecondField = GenerateRandomString(100),
+                    HomeSecondField = GenerateRandomString(100),
+                    Notes = GenerateRandomString(100)
+                });
+            }
+            return groups;
+        }
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void VerifyContactCreation(ContactData contactInfoForCreation)
+        {
             List<ContactData> contactsBefore = App.Contact.GetContactsList();
 
             App.Contact.Create(contactInfoForCreation);
@@ -39,33 +67,6 @@ namespace WebAddressBookTests
 
             }
             contactsBefore.Add(contactInfoForCreation);
-            contactsBefore.Sort();
-            contactsAfter.Sort();
-            Assert.AreEqual(contactsBefore, contactsAfter);
-        }
-        [Test]
-        public void VerifyEmptryContactCreation()
-        {
-            ContactData emptyContactInfo = new ContactData("", "");
-            List<ContactData> contactsBefore = App.Contact.GetContactsList();
-
-            App.Contact.Create(emptyContactInfo);
-
-            Assert.AreEqual(contactsBefore.Count + 1, App.Contact.GetContactCount());
-
-            List<ContactData> contactsAfter = App.Contact.GetContactsList();
-            var contactAfterMaxId = contactsAfter.Max(x => x.Id);
-
-            foreach (ContactData contactAfter in contactsAfter)
-            {
-                if (contactAfter.Id == contactAfterMaxId)
-                {
-                    Assert.AreEqual(emptyContactInfo.FirstName, contactAfter.FirstName);
-                    Assert.AreEqual(emptyContactInfo.LastName, contactAfter.LastName);
-                }
-
-            }
-            contactsBefore.Add(emptyContactInfo);
             contactsBefore.Sort();
             contactsAfter.Sort();
             Assert.AreEqual(contactsBefore, contactsAfter);

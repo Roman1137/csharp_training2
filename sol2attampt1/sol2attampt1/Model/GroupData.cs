@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
-    public class GroupData:IEquatable<GroupData>,IComparable<GroupData>
+    public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
         public string Name { get; set; }
-        public string Header { get; set; }  = "";
-        public string Footer { get; set; }  = "";
+        public string Header { get; set; } = "";
+        public string Footer { get; set; } = "";
         public string Id { get; set; }
 
         public GroupData()
@@ -21,7 +21,7 @@ namespace WebAddressBookTests
         {
             this.Name = name;
         }
-        public GroupData(string name,string header,string footer)
+        public GroupData(string name, string header, string footer)
         {
             this.Name = name;
             this.Header = header;
@@ -45,6 +45,9 @@ namespace WebAddressBookTests
             return String.Compare(Name, other.Name, StringComparison.Ordinal);
         }
 
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return "Name=" + Name + "\nHeader=" + Header + "\nFooter=" + Footer;
+        }
     }
 }

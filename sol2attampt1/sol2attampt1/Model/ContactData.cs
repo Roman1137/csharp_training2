@@ -44,21 +44,21 @@ namespace WebAddressBookTests
                 else
                 {
                     return $"{CleanUp(FirstName)}{CleanUp(MiddleName)}{CleanUp(LastName)}" +
-                            $"{CleanUp(NickName)}" +
-                            $"{CleanUp(Tittle)}" +
-                            $"{CleanUp(Company)}" +
-                            $"{CleanUp(Address)}" +
-                            $"{CleanUp(HomePhone)}" +
-                            $"{CleanUp(MobilePhone)}" +
-                            $"{CleanUp(WorkPhone)}" +
-                            $"{CleanUp(Fax)}" +
-                            $"{CleanUp(Email)}" +
-                            $"{CleanUp(EmailSecondField)}" +
-                            $"{CleanUp(EmailThirdField)}" +
-                            $"{CleanUp(Homepage)}" +
-                            $"{CleanUp(AddressSecondField)}" +
-                            $"{CleanUp(HomeSecondField)}" +
-                            $"{CleanUp(Notes)}";
+                           $"{CleanUp(NickName)}" +
+                           $"{CleanUp(Tittle)}" +
+                           $"{CleanUp(Company)}" +
+                           $"{CleanUp(Address)}" +
+                           $"{CleanUp(HomePhone)}" +
+                           $"{CleanUp(MobilePhone)}" +
+                           $"{CleanUp(WorkPhone)}" +
+                           $"{CleanUp(Fax)}" +
+                           $"{CleanUp(Email)}" +
+                           $"{CleanUp(EmailSecondField)}" +
+                           $"{CleanUp(EmailThirdField)}" +
+                           $"{CleanUp(Homepage)}" +
+                           $"{CleanUp(AddressSecondField)}" +
+                           $"{CleanUp(HomeSecondField)}" +
+                           $"{CleanUp(Notes)}";
                 }
             }
             set => allInfo = CleanUp(value);
@@ -75,7 +75,8 @@ namespace WebAddressBookTests
 
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone) + CleanUp(HomeSecondField)).Trim();
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone) + CleanUp(HomeSecondField))
+                        .Trim();
                 }
             }
             set => allPhones = CleanUp(value);
@@ -114,7 +115,11 @@ namespace WebAddressBookTests
             this.FirstName = firstName;
             this.LastName = lastName;
         }
-        public ContactData() { }
+
+        public ContactData()
+        {
+        }
+
         public bool Equals(ContactData other)
         {
             if (ReferenceEquals(other, null))
@@ -128,10 +133,14 @@ namespace WebAddressBookTests
         {
             if (ReferenceEquals(other, null))
                 return 1;
-            return String.Compare((FirstName + "," + LastName), other.FirstName + "," + other.LastName, StringComparison.Ordinal);
+            return String.Compare((FirstName + "," + LastName), other.FirstName + "," + other.LastName,
+                StringComparison.Ordinal);
         }
 
-        public override string ToString() => FirstName + "," + LastName;
+        public override string ToString()
+        {
+           return "FirstName ="+FirstName + "\nLastName="+ LastName;
+        } 
         public override int GetHashCode() => Tuple.Create(FirstName, LastName).GetHashCode();
 
     }

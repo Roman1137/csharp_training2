@@ -4,7 +4,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System.Collections.Generic;
-using NUnit.Framework.Interfaces;
 
 namespace WebAddressBookTests
 {
