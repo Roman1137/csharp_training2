@@ -37,6 +37,5 @@ namespace WebAddressBookTests
 
             Assert.AreEqual(fromForm.AllInfo, fromDetailsForm.AllInfo);
         }
-
     }
 }
