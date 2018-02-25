@@ -7,7 +7,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace WebAddressBookTests
 {
@@ -44,7 +47,90 @@ namespace WebAddressBookTests
             return groups;
         }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]
+        public static IEnumerable<ContactData> ContactsDataFromCsvFile()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            string[] lines = File.ReadAllLines(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\ContactsDataFiles\contacts.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                contacts.Add(new ContactData
+                {
+                    FirstName = parts[0],
+                    LastName = parts[1],
+                    MiddleName = parts[2],
+                    NickName = parts[3],
+                    Company = parts[4],
+                    Tittle = parts[5],
+                    Address = parts[6],
+                    HomePhone = parts[7],
+                    MobilePhone = parts[8],
+                    WorkPhone = parts[9],
+                    Fax = parts[10],
+                    Email = parts[11],
+                    EmailSecondField = parts[12],
+                    EmailThirdField = parts[13],
+                    Homepage = parts[14],
+                    AddressSecondField = parts[15],
+                    HomeSecondField = parts[16],
+                    Notes = parts[17],
+                });
+            }
+            return contacts;
+        }
+
+        public static IEnumerable<ContactData> ContactsDataFromXmlFile()
+        {
+            return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>)).Deserialize(
+                 new StreamReader(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\ContactsDataFiles\contacts.xml"));
+        }
+
+        public static IEnumerable<ContactData> ContactsDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(
+               File.ReadAllText(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\ContactsDataFiles\contacts.json"));
+        }
+
+        public static IEnumerable<ContactData> ContactsDataFromExcelFile()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+            app.Visible = true;
+            Microsoft.Office.Interop.Excel.Workbook workBook = app.Workbooks.Open(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\ContactsDataFiles\contacts.xlsx");
+            Microsoft.Office.Interop.Excel.Worksheet workSheet = workBook.Sheets[1];
+            Microsoft.Office.Interop.Excel.Range range = workSheet.UsedRange;
+            for (int i = 1; i <= range.Rows.Count; i++)
+            {
+                contacts.Add(new ContactData()
+                {
+                    FirstName = range.Cells[i, 1].Value,
+                    LastName = range.Cells[i, 2].Value,
+                    MiddleName = range.Cells[i, 3].Value,
+                    NickName = range.Cells[i, 4].Value,
+                    Company = range.Cells[i, 5].Value,
+                    Tittle = range.Cells[i, 6].Value,
+                    Address = range.Cells[i, 7].Value,
+                    HomePhone = range.Cells[i, 8].Value,
+                    MobilePhone = range.Cells[i, 9].Value,
+                    WorkPhone = range.Cells[i, 10].Value,
+                    Fax = range.Cells[i, 11].Value,
+                    Email = range.Cells[i, 12].Value,
+                    EmailSecondField = range.Cells[i, 13].Value,
+                    EmailThirdField = range.Cells[i, 14].Value,
+                    Homepage = range.Cells[i, 15].Value,
+                    AddressSecondField = range.Cells[i, 16].Value,
+                    HomeSecondField = range.Cells[i, 17].Value,
+                    Notes = range.Cells[i, 18].Value
+                });
+            }
+            workBook.Close();
+            app.Visible = false;
+            app.Quit();
+            return contacts;
+        }
+
+
+        [Test, TestCaseSource("ContactsDataFromExcelFile")]
         public void VerifyContactCreation(ContactData contactInfoForCreation)
         {
             List<ContactData> contactsBefore = App.Contact.GetContactsList();
