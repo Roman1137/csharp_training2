@@ -50,7 +50,7 @@ namespace WebAddressBookTests
         public static IEnumerable<ContactData> ContactsDataFromCsvFile()
         {
             List<ContactData> contacts = new List<ContactData>();
-            string[] lines = File.ReadAllLines(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\ContactsDataFiles\contacts.csv");
+            string[] lines = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\ContactsDataFiles\contacts.csv");
             foreach (string l in lines)
             {
                 string[] parts = l.Split(',');
@@ -82,13 +82,13 @@ namespace WebAddressBookTests
         public static IEnumerable<ContactData> ContactsDataFromXmlFile()
         {
             return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>)).Deserialize(
-                 new StreamReader(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\ContactsDataFiles\contacts.xml"));
+                 new StreamReader(TestContext.CurrentContext.TestDirectory + @"\ContactsDataFiles\contacts.xml"));
         }
 
         public static IEnumerable<ContactData> ContactsDataFromJsonFile()
         {
             return JsonConvert.DeserializeObject<List<ContactData>>(
-               File.ReadAllText(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\ContactsDataFiles\contacts.json"));
+               File.ReadAllText(TestContext.CurrentContext.TestDirectory + @"\ContactsDataFiles\contacts.json"));
         }
 
         public static IEnumerable<ContactData> ContactsDataFromExcelFile()
@@ -96,7 +96,7 @@ namespace WebAddressBookTests
             List<ContactData> contacts = new List<ContactData>();
             Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
             app.Visible = true;
-            Microsoft.Office.Interop.Excel.Workbook workBook = app.Workbooks.Open(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\ContactsDataFiles\contacts.xlsx");
+            Microsoft.Office.Interop.Excel.Workbook workBook = app.Workbooks.Open(TestContext.CurrentContext.TestDirectory + @"\ContactsDataFiles\contacts.xlsx");
             Microsoft.Office.Interop.Excel.Worksheet workSheet = workBook.Sheets[1];
             Microsoft.Office.Interop.Excel.Range range = workSheet.UsedRange;
             for (int i = 1; i <= range.Rows.Count; i++)

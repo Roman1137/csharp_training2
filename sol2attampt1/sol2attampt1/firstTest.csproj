@@ -98,16 +98,20 @@
     <None Include="ContactsDataFiles\contacts.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ContactsDataFiles\contacts.json" />
-    <None Include="ContactsDataFiles\contacts.xlsx" />
+    <None Include="ContactsDataFiles\contacts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ContactsDataFiles\contacts.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="GroupsDataFiles\groups.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="GroupsDataFiles\groups.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="GroupsDataFiles\groups.xlsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -115,7 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GroupsDataFiles\groups.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -157,7 +161,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ContactsDataFiles\contacts.xml" />
+    <Content Include="ContactsDataFiles\contacts.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

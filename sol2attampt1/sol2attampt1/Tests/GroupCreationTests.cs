@@ -30,7 +30,7 @@ namespace WebAddressBookTests
         public static IEnumerable<GroupData> GroupDataFromCsvFile()
         {
             List<GroupData> groups = new List<GroupData>();
-            string[] lines = File.ReadAllLines(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\GroupsDataFiles\groups.csv");
+            string[] lines = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\GroupsDataFiles\groups.csv");
             foreach (string l in lines)
             {
                 string[] parts = l.Split(',');
@@ -46,13 +46,13 @@ namespace WebAddressBookTests
         public static IEnumerable<GroupData> GroupDataFromXmlFile()
         {
             return (List<GroupData>)new XmlSerializer(typeof(List<GroupData>)).Deserialize(
-                 new StreamReader(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\GroupsDataFiles\groups.xml"));
+                 new StreamReader(TestContext.CurrentContext.TestDirectory + @"\GroupsDataFiles\groups.xml"));
         }
 
         public static IEnumerable<GroupData> GroupDataFromJsonFile()
         {
             return JsonConvert.DeserializeObject<List<GroupData>>(
-               File.ReadAllText(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\GroupsDataFiles\groups.json"));
+               File.ReadAllText(TestContext.CurrentContext.TestDirectory + @"\GroupsDataFiles\groups.json"));
         }
 
         public static IEnumerable<GroupData> GroupDataFromExcelFile()
@@ -60,7 +60,7 @@ namespace WebAddressBookTests
             List<GroupData> groups = new List<GroupData>();
             Excel.Application app = new Excel.Application();
             app.Visible = true;
-            Excel.Workbook workBook = app.Workbooks.Open(@"X:\project\csharp_training2\sol2attampt1\sol2attampt1\GroupsDataFiles\groups.xlsx");
+            Excel.Workbook workBook = app.Workbooks.Open(TestContext.CurrentContext.TestDirectory+ @"\GroupsDataFiles\groups.xlsx");
             Excel.Worksheet workSheet = workBook.Sheets[1];
             Excel.Range range = workSheet.UsedRange;
             for (int i = 1; i <= range.Rows.Count; i++)
