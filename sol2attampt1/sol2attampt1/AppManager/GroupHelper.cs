@@ -24,12 +24,23 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public GroupHelper Modify(int numberOfItemToEdit, GroupData infoForUpdate)
+        public GroupHelper Modify(int numberOfItemToEdit, GroupData groupInfoForUpdate)
         {
             Manager.Navigator.GoToGroupsPage();
             SelectGroup(numberOfItemToEdit);
             InitGroupModification();
-            FillGroupForm(infoForUpdate);
+            FillGroupForm(groupInfoForUpdate);
+            SubmitGroupModification();
+            Manager.Navigator.GoToGroupsPage();
+            return this;
+        }
+
+        internal GroupHelper Modify(GroupData groupToBeModified, GroupData groupInfoForUpdate)
+        {
+            Manager.Navigator.GoToGroupsPage();
+            SelectGroup(groupToBeModified.Id);
+            InitGroupModification();
+            FillGroupForm(groupInfoForUpdate);
             SubmitGroupModification();
             Manager.Navigator.GoToGroupsPage();
             return this;
@@ -40,6 +51,15 @@ namespace WebAddressBookTests
             Manager.Navigator.GoToGroupsPage();
             SelectGroup(numberOfItemToDelete).
             InitGroupRemoval();
+            Manager.Navigator.GoToGroupsPage();
+            return this;
+        }
+
+        public GroupHelper Remove(GroupData numberOfItemToDelete)
+        {
+            Manager.Navigator.GoToGroupsPage();
+            SelectGroup(numberOfItemToDelete.Id).
+                InitGroupRemoval();
             Manager.Navigator.GoToGroupsPage();
             return this;
         }
@@ -101,6 +121,12 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public GroupHelper SelectGroup(string id)
+        {
+            Driver.FindElement(By.XPath($"(//input[@name='selected[]' and @value='{id}'])")).Click();
+            return this;
+        }
+
         public List<GroupData> groupCache { get; private set; }
 
         public List<GroupData> GetGroupsList()
@@ -141,6 +167,5 @@ namespace WebAddressBookTests
         {
             return Driver.FindElements(By.CssSelector("span.group")).Count;
         }
-
     }
 }

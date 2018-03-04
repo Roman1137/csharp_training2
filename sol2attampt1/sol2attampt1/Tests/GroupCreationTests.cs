@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml.Serialization;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Assert = NUnit.Framework.Assert;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -60,7 +61,7 @@ namespace WebAddressBookTests
             List<GroupData> groups = new List<GroupData>();
             Excel.Application app = new Excel.Application();
             app.Visible = true;
-            Excel.Workbook workBook = app.Workbooks.Open(TestContext.CurrentContext.TestDirectory+ @"\GroupsDataFiles\groups.xlsx");
+            Excel.Workbook workBook = app.Workbooks.Open(TestContext.CurrentContext.TestDirectory + @"\GroupsDataFiles\groups.xlsx");
             Excel.Worksheet workSheet = workBook.Sheets[1];
             Excel.Range range = workSheet.UsedRange;
             for (int i = 1; i <= range.Rows.Count; i++)
@@ -78,17 +79,17 @@ namespace WebAddressBookTests
             return groups;
         }
 
-        [Test, TestCaseSource("GroupDataFromExcelFile")]
+        [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void VerifyGroupCreation(GroupData groupInfoForCreation)
         {
 
-            List<GroupData> groupsBefore = App.Group.GetGroupsList();
+            var groupsBefore = GroupData.GetAll();
 
             App.Group.Create(groupInfoForCreation);
 
             Assert.AreEqual(groupsBefore.Count + 1, App.Group.GetGroupCount());
 
-            List<GroupData> groupsAfter = App.Group.GetGroupsList();
+            var groupsAfter = GroupData.GetAll();
             var groupAfterMaxId = groupsAfter.Max(x => x.Id);
 
             foreach (GroupData groupAfter in groupsAfter)
@@ -126,6 +127,20 @@ namespace WebAddressBookTests
             groupsBefore.Sort();
             groupsAfter.Sort();
             Assert.AreEqual(groupsBefore, groupsAfter);
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            var start = DateTime.Now;
+            var fromUi = App.Contact.GetContactsList();
+            var end = DateTime.Now;
+            Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            var fromBd = ContactData.GetAll();
+            end = DateTime.Now;
+            Console.Out.WriteLine(end.Subtract(start));
         }
     }
 }

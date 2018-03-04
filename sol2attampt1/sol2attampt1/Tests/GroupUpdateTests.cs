@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupUpdateTests : AuthTestBase
+    public class GroupUpdateTests : GroupTestBase
     {
         GroupData groupInfoForCreation = new GroupData(RandomString(10), RandomString(10), RandomString(10));
 
@@ -19,14 +19,14 @@ namespace WebAddressBookTests
             const int numberOfItemToEdited = 5;
             groupInfoForUpdate.Footer = null;
             App.Group.VerifyGroupExists(numberOfItemToEdited, groupInfoForCreation);
-            List<GroupData> groupsBefore = App.Group.GetGroupsList();
-            GroupData groupToBeModified = groupsBefore[numberOfItemToEdited];
+            var groupsBefore = GroupData.GetAll();
+            var groupToBeModified = groupsBefore[numberOfItemToEdited];
 
-            App.Group.Modify(numberOfItemToEdited,groupInfoForUpdate);
+            App.Group.Modify(groupToBeModified, groupInfoForUpdate);
 
             Assert.AreEqual(groupsBefore.Count, App.Group.GetGroupCount());
 
-            List<GroupData> groupsAfter = App.Group.GetGroupsList();
+            var groupsAfter = GroupData.GetAll();
             groupsBefore[numberOfItemToEdited].Name = groupInfoForUpdate.Name;
             groupsBefore.Sort();
             groupsAfter.Sort();

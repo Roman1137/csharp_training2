@@ -24,15 +24,35 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper Modify(int numberOfItemTModify, ContactData infoForUpdate)
+        public ContactHelper Modify(int numberOfItemTModify, ContactData contactInfoForUpdate)
         {
             Manager.Navigator.GoToHomePage();
             InitContactModification(numberOfItemTModify);
-            FillAllContactForms(infoForUpdate);
+            FillAllContactForms(contactInfoForUpdate);
             SubmitContactModification();
             Manager.Navigator.GoToHomePage();
             return this;
         }
+
+        internal ContactHelper Modify(ContactData contactToBeModified, ContactData contactInfoForUpdate)
+        {
+            Manager.Navigator.GoToHomePage();
+            InitContactModification(contactToBeModified.Id);
+            FillAllContactForms(contactInfoForUpdate);
+            SubmitContactModification();
+            Manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+        public ContactHelper Delete(ContactData contactToBeRemoved)
+        {
+            Manager.Navigator.GoToHomePage();
+            SelectCheckBox(contactToBeRemoved.Id).
+                SubmitContactRemoval();
+            Manager.Navigator.GoToHomePage();
+            return this;
+        }
+
         public ContactHelper Delete(int numberOfElementToDelete)
         {
             Manager.Navigator.GoToHomePage();
@@ -96,9 +116,23 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public ContactHelper SelectCheckBox(string index)
+        {
+            Driver.FindElement(By.XPath($"(//input[@name='selected[]' and @value='{index}'])")).Click();
+            return this;
+        }
+
         public ContactHelper InitContactModification(int indexOfContact)
         {
             Driver.FindElement(By.XPath($"(//img[@title='Edit'])[{indexOfContact + 1}]")).Click();
+            return this;
+        }
+
+        private ContactHelper InitContactModification(string id)
+        {
+            var row = Driver.FindElement(By.XPath($".//input[@value='{id}']/../.."));
+            var element = row.FindElement(By.XPath("(.//img[@title='Edit'])"));
+            element.Click();
             return this;
         }
 

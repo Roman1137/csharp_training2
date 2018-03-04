@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupRemovalTests : AuthTestBase
+    public class GroupRemovalTests : GroupTestBase
     {
         GroupData groupInfoForCreation = new GroupData(RandomString(10), RandomString(10), RandomString(10));
 
@@ -20,14 +20,14 @@ namespace WebAddressBookTests
         {
             const int numberOfItemToDelete = 5;
             App.Group.VerifyGroupExists(numberOfItemToDelete, groupInfoForCreation);
-            List<GroupData> groupsBefore = App.Group.GetGroupsList();
-            GroupData groupToBeRemoved = groupsBefore[numberOfItemToDelete];
+            var groupsBefore = GroupData.GetAll();
+            var groupToBeRemoved = groupsBefore[numberOfItemToDelete];
 
-            App.Group.Remove(numberOfItemToDelete);
+            App.Group.Remove(groupToBeRemoved);
 
             Assert.AreEqual(groupsBefore.Count - 1, App.Group.GetGroupCount());
 
-            List<GroupData> groupsAfter = App.Group.GetGroupsList();
+            var groupsAfter = GroupData.GetAll();
             groupsBefore.RemoveAt(numberOfItemToDelete);
             groupsAfter.Sort();
             groupsBefore.Sort();

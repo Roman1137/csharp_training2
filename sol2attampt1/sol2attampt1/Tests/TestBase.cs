@@ -10,6 +10,7 @@ namespace WebAddressBookTests
     [TestFixture]
     public class TestBase
     {
+        public static bool PERFORM_LONG_UI_TESTS = true;
         public ApplicationManager App { get; set; }
         [SetUp]
         public void SetupApplicationManager()
