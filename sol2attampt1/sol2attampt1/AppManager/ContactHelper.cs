@@ -295,5 +295,86 @@ namespace WebAddressBookTests
                 return "";
             }
         }
+
+        public void AddContactToGroup(ContactData contactToSelect, GroupData group)
+        {
+            Manager.Navigator.GoToHomePage();
+            SetGroupInFilter("[all]");
+            SelectCheckBox(contactToSelect.Id);
+            SelectGroupToAdd(group.Name);
+            CommitActionForContact();
+        }
+
+        public void CommitActionForContact(bool addToGroup = true)
+        {
+            if (addToGroup)
+            {
+                Driver.FindElement(By.Name("add")).Click();
+            }
+            else
+            {
+                Driver.FindElement(By.Name("remove")).Click();
+            }
+            var wait = new WebDriverWait(Driver,TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("div.msgbox")));
+        }
+
+        public void SelectGroupToAdd(string groupName)
+        {
+            new SelectElement(Driver.FindElement(By.Name("to_group"))).SelectByText(groupName);
+        }
+
+        public void SetGroupInFilter(string nameOfGroup)
+        {
+            new SelectElement(Driver.FindElement(By.Name("group"))).SelectByText(nameOfGroup);
+        }
+
+        public void RemoveContactFromGroup(ContactData contactToRemove, GroupData group)
+        {
+            Manager.Navigator.GoToHomePage();
+            SetGroupInFilter(group.Name);
+            SelectCheckBox(contactToRemove.Id);
+            CommitActionForContact(addToGroup: false);
+        }
+
+        public (ContactData contactToSelect, List<ContactData> oldList) VerifyContactFromNotThisGroupExists(GroupData group)
+        {
+            var oldList = group.GetContacts();
+            var contactsToSelect = ContactData.GetAll().Except(oldList);
+            if (!contactsToSelect.Any())
+            {
+                var contactToBeRemoved = oldList.First();
+                RemoveContactFromGroup(contactToBeRemoved, group);
+                oldList = group.GetContacts();
+                contactsToSelect = ContactData.GetAll().Except(oldList);
+                if (!contactsToSelect.Any())
+                {
+                    throw new ArgumentException("Из-за того, что в приложении можна " +
+                                                "создавать группы с одинаковыми именами этот тест упал, а Вы нашли багу.");
+                }
+                return (contactsToSelect.First(), oldList);
+            }
+
+            return (contactsToSelect.First(),oldList);
+        }
+
+        public (ContactData contactToRemove, List<ContactData> oldList) VerifyContactToDeleteExists(GroupData group)
+        {
+            var oldList = group.GetContacts();
+            if (!oldList.Any())
+            {
+                var contactToAdded = ContactData.GetAll().First();
+                AddContactToGroup(contactToAdded, group);
+                oldList = group.GetContacts();
+                if (oldList.Count == 0)
+                {
+                    throw  new ArgumentException("Из-за того, что в приложении можна " +
+                                                 "создавать группы с одинаковыми именами этот тест упал, а Вы нашли багу.");
+                }
+                return (oldList.First(), oldList);
+            }
+
+            return (oldList.First(), oldList);
+        }
     }
 }

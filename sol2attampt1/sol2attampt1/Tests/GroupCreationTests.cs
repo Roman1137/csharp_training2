@@ -104,7 +104,7 @@ namespace WebAddressBookTests
         }
 
 
-        [Test]
+        //[Test]
         [NUnit.Framework.Ignore("test")]
         public void VerifyBadNameGroupCreation()
         {
@@ -127,20 +127,6 @@ namespace WebAddressBookTests
             groupsBefore.Sort();
             groupsAfter.Sort();
             Assert.AreEqual(groupsBefore, groupsAfter);
-        }
-
-        [Test]
-        public void TestDBConnectivity()
-        {
-            var start = DateTime.Now;
-            var fromUi = App.Contact.GetContactsList();
-            var end = DateTime.Now;
-            Console.Out.WriteLine(end.Subtract(start));
-
-            start = DateTime.Now;
-            var fromBd = ContactData.GetAll();
-            end = DateTime.Now;
-            Console.Out.WriteLine(end.Subtract(start));
         }
     }
 }
